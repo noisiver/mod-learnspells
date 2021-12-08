@@ -1,7 +1,5 @@
 [worldserver]
-###########################################################################
-# Learning spells and skills
-###########################################################################
+
 # Learn spells when entering the world
 OnLogin.Enabled = 0
 
@@ -43,4 +41,3 @@ Riding.Artisan.Enabled = 0
 
 # Learn cold weather flying at level 77
 Riding.ColdWeather.Enabled = 0
-###########################################################################
