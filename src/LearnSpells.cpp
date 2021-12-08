@@ -67,7 +67,7 @@ class LearnSpellsData : public WorldScript
     private:
         void LoadClassSpells()
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_LearnSpells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_CLASS_SPELLS);
+            QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learn_spells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_CLASS_SPELLS);
 
             if (!result)
                 return;
@@ -91,7 +91,7 @@ class LearnSpellsData : public WorldScript
 
         void LoadTalentRanks()
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT `class_id`, `spell_id`, `required_level`, `required_spell_id` FROM `mod_LearnSpells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_TALENT_RANKS);
+            QueryResult result = WorldDatabase.PQuery("SELECT `class_id`, `spell_id`, `required_level`, `required_spell_id` FROM `mod_learn_spells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_TALENT_RANKS);
 
             if (!result)
                 return;
@@ -113,7 +113,7 @@ class LearnSpellsData : public WorldScript
 
         void LoadProficiencies()
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT `class_id`, `spell_id`, `required_level` FROM `mod_LearnSpells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_PROFICIENCIES);
+            QueryResult result = WorldDatabase.PQuery("SELECT `class_id`, `spell_id`, `required_level` FROM `mod_learn_spells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_PROFICIENCIES);
 
             if (!result)
                 return;
@@ -135,7 +135,7 @@ class LearnSpellsData : public WorldScript
 
         void LoadMounts()
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_LearnSpells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_MOUNTS);
+            QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learn_spells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_MOUNTS);
 
             if (!result)
                 return;
