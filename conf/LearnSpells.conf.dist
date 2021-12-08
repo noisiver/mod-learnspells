@@ -1,0 +1,46 @@
+[worldserver]
+###########################################################################
+# Learning spells and skills
+###########################################################################
+# Learn spells when entering the world
+OnLogin.Enabled = 0
+
+# Learn spells when leveling up
+OnLevelUp.Enabled = 0
+
+# Learn class-specific spells
+ClassSpells.Enabled = 0
+
+# Learn ranks of known talents
+TalentRanks.Enabled = 0
+
+# Learn weapon and defense skills
+Proficiencies.Enabled = 0
+
+# Learn spells obtained through quests
+SpellsFromQuests.Enabled = 0
+
+# Set a players weapon skills to their max value
+MaxSkill.Enabled = 0
+
+# Max level where a player gets their skills maxed out
+MaxSkill.MaxLevel = 60
+
+# Learn riding and mount spells
+Riding.Enabled = 0
+
+# Learn apprentice (75%) riding and mount spells
+Riding.Apprentice.Enabled = 0
+
+# Learn journeyman (150%) riding and mount spells
+Riding.Journeyman.Enabled = 0
+
+# Learn expert (225%) riding and mount spells
+Riding.Expert.Enabled = 0
+
+# Learn artisan (300%) riding and mount spells
+Riding.Artisan.Enabled = 0
+
+# Learn cold weather flying at level 77
+Riding.ColdWeather.Enabled = 0
+###########################################################################
