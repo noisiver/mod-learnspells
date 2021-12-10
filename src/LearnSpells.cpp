@@ -64,6 +64,7 @@ class LearnSpellsData : public WorldScript
                 LoadTalentRanks();
                 LoadProficiencies();
                 LoadMounts();
+                LOG_INFO("server.loading", " ");
             }
         }
 
