@@ -59,10 +59,12 @@ class LearnSpellsData : public WorldScript
         void OnStartup() override
         {
             LOG_INFO("server.loading", "Loading spells...");
-            LoadClassSpells();
-            LoadTalentRanks();
-            LoadProficiencies();
-            LoadMounts();
+            {
+                LoadClassSpells();
+                LoadTalentRanks();
+                LoadProficiencies();
+                LoadMounts();
+            }
         }
 
     private:
