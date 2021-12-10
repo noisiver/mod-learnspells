@@ -58,6 +58,7 @@ class LearnSpellsData : public WorldScript
 
         void OnStartup() override
         {
+            LOG_INFO("server.loading", "Loading spells...");
             LoadClassSpells();
             LoadTalentRanks();
             LoadProficiencies();
@@ -70,7 +71,10 @@ class LearnSpellsData : public WorldScript
             QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_CLASS_SPELLS);
 
             if (!result)
+            {
+                LOG_INFO("server.loading", ">> Loaded 0 class spells. DB table `mod_learnspells` has no spells of type 0.");
                 return;
+            }
 
             int i = 0;
             do
@@ -87,6 +91,8 @@ class LearnSpellsData : public WorldScript
 
                 i++;
             } while (result->NextRow());
+
+            LOG_INFO("server.loading", ">> Loaded %i class spells", i);
         }
 
         void LoadTalentRanks()
@@ -94,7 +100,10 @@ class LearnSpellsData : public WorldScript
             QueryResult result = WorldDatabase.PQuery("SELECT `class_id`, `spell_id`, `required_level`, `required_spell_id` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_TALENT_RANKS);
 
             if (!result)
+            {
+                LOG_INFO("server.loading", ">> Loaded 0 talent ranks. DB table `mod_learnspells` has no spells of type 1.");
                 return;
+            }
 
             int i = 0;
             do
@@ -109,6 +118,8 @@ class LearnSpellsData : public WorldScript
 
                 i++;
             } while (result->NextRow());
+
+            LOG_INFO("server.loading", ">> Loaded %i talent ranks", i);
         }
 
         void LoadProficiencies()
@@ -116,7 +127,10 @@ class LearnSpellsData : public WorldScript
             QueryResult result = WorldDatabase.PQuery("SELECT `class_id`, `spell_id`, `required_level` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_PROFICIENCIES);
 
             if (!result)
+            {
+                LOG_INFO("server.loading", ">> Loaded 0 proficiencies. DB table `mod_learnspells` has no spells of type 2.");
                 return;
+            }
 
             int i = 0;
 
@@ -131,6 +145,8 @@ class LearnSpellsData : public WorldScript
 
                 i++;
             } while (result->NextRow());
+
+            LOG_INFO("server.loading", ">> Loaded %i proficiencies", i);
         }
 
         void LoadMounts()
@@ -138,7 +154,10 @@ class LearnSpellsData : public WorldScript
             QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", TYPE_MOUNTS);
 
             if (!result)
+            {
+                LOG_INFO("server.loading", ">> Loaded 0 mounts. DB table `mod_learnspells` has no spells of type 3.");
                 return;
+            }
 
             int i = 0;
 
@@ -157,6 +176,8 @@ class LearnSpellsData : public WorldScript
 
                 i++;
             } while (result->NextRow());
+
+            LOG_INFO("server.loading", ">> Loaded %i mounts", i);
         }
 };
 
