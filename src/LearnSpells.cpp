@@ -223,7 +223,7 @@ class LearnSpells : public PlayerScript
         {
             for (int i = 0; i < classSpells.size(); i++)
             {
-                if (classSpells[i].RequiresQuest == 1 && !sConfigMgr->GetOption<bool>("SpellsFromQuests.Enabled", 0))
+                if (classSpells[i].RequiresQuest == 1 && !sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 0))
                     continue;
 
                 if (classSpells[i].RaceId == -1 || classSpells[i].RaceId == player->getRace())
