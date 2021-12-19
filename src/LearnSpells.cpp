@@ -51,10 +51,147 @@ enum SpellType
     MOUNT
 };
 
-class LearnSpellsData : public WorldScript
+bool enableOnLogin;
+bool enableOnLevelUp;
+bool enableClassSpells;
+bool enableTalentRanks;
+bool enableProficiencies;
+bool enableFromQuests;
+bool enableMaxSkill;
+uint32 maxSkillMaxLevel;
+bool enableRiding;
+bool enableApprenticeRiding;
+bool enableJourneymanRiding;
+bool enableExpertRiding;
+bool enableArtisanRiding;
+bool enableColdWeatherFlying;
+
+class LearnSpellsPlayer : public PlayerScript
 {
     public:
-        LearnSpellsData() : WorldScript("LearnSpellsData") { }
+        LearnSpellsPlayer() : PlayerScript("LearnSpellsPlayer") {}
+
+        void OnLogin(Player* player) override
+        {
+            if (enableOnLogin)
+                LearnAllSpells(player);
+        }
+
+        void OnLevelChanged(Player* player, uint8 oldLevel) override
+        {
+            if (enableOnLevelUp)
+                LearnAllSpells(player);
+        }
+
+    private:
+        void LearnAllSpells(Player* player)
+        {
+            if (enableClassSpells)
+                LearnSpellsForNewLevel(player);
+
+            if (enableTalentRanks)
+                LearnTalentRanksForNewLevel(player);
+
+            if (enableProficiencies)
+                LearnProficienciesForNewLevel(player);
+
+            if (enableRiding)
+                LearnMountsForNewLevel(player);
+
+            if (enableMaxSkill)
+                MaxAllWeaponSkills(player);
+        }
+
+        void LearnSpellsForNewLevel(Player* player)
+        {
+            for (int i = 0; i < classSpells.size(); i++)
+            {
+                if (classSpells[i].RequiresQuest == 1 && !enableFromQuests)
+                    continue;
+
+                if (classSpells[i].RaceId == -1 || classSpells[i].RaceId == player->getRace())
+                    if (classSpells[i].ClassId == player->getClass())
+                        if (player->getLevel() >= classSpells[i].RequiredLevel)
+                            if (classSpells[i].RequiredSpellId == -1 || player->HasSpell(classSpells[i].RequiredSpellId))
+                                if (!player->HasSpell(classSpells[i].SpellId))
+                                    player->learnSpell(classSpells[i].SpellId);
+            }
+        }
+
+        void LearnTalentRanksForNewLevel(Player* player)
+        {
+            for (int i = 0; i < talentRanks.size(); i++)
+            {
+                if (talentRanks[i].ClassId == player->getClass())
+                    if (player->getLevel() >= talentRanks[i].RequiredLevel)
+                        if (player->HasSpell(talentRanks[i].RequiredSpellId))
+                            if (!player->HasSpell(talentRanks[i].SpellId))
+                                player->learnSpell(talentRanks[i].SpellId);
+            }
+        }
+
+        void LearnProficienciesForNewLevel(Player* player)
+        {
+            for (int i = 0; i < proficiencies.size(); i++)
+            {
+                if (proficiencies[i].ClassId == player->getClass())
+                    if (player->getLevel() >= proficiencies[i].RequiredLevel)
+                        if (!player->HasSpell(proficiencies[i].SpellId))
+                            player->learnSpell(proficiencies[i].SpellId);
+            }
+        }
+
+        void MaxAllWeaponSkills(Player* player)
+        {
+            if (player->getLevel() <= maxSkillMaxLevel)
+                player->UpdateSkillsToMaxSkillsForLevel();
+        }
+
+        void LearnMountsForNewLevel(Player* player)
+        {
+            for (int i = 0; i < mounts.size(); i++)
+            {
+                if ((mounts[i].SpellId == 33388 && !enableApprenticeRiding) || 
+                    (mounts[i].SpellId == 33391 && !enableJourneymanRiding) || 
+                    (mounts[i].SpellId == 34090 && !enableExpertRiding) || 
+                    (mounts[i].SpellId == 34091 && !enableArtisanRiding) || 
+                    (mounts[i].SpellId == 54197 && !enableColdWeatherFlying) || 
+                    (mounts[i].RequiresQuest == 1 && !enableFromQuests))
+                    continue;
+
+                if (mounts[i].RaceId == -1 || mounts[i].RaceId == player->getRace())
+                    if (mounts[i].ClassId == -1 || mounts[i].ClassId == player->getClass())
+                        if (mounts[i].TeamId == -1 || mounts[i].TeamId == player->GetTeamId())
+                            if (mounts[i].RequiredSpellId == -1 || player->HasSpell(mounts[i].RequiredSpellId))
+                                if (player->getLevel() >= mounts[i].RequiredLevel)
+                                    if (!player->HasSpell(mounts[i].SpellId))
+                                        player->learnSpell(mounts[i].SpellId);
+            }
+        }
+};
+
+class LearnSpellsWorld : public WorldScript
+{
+    public:
+        LearnSpellsWorld() : WorldScript("LearnSpellsWorld") { }
+
+        void OnAfterConfigLoad(bool /*reload*/) override
+        {
+            enableOnLogin           = sConfigMgr->GetOption<bool>("LearnSpells.OnLogin.Enabled", 0);
+            enableOnLevelUp         = sConfigMgr->GetOption<bool>("LearnSpells.OnLevelUp.Enabled", 0);
+            enableClassSpells       = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells.Enabled", 0);
+            enableTalentRanks       = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks.Enabled", 0);
+            enableProficiencies     = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies.Enabled", 0);
+            enableFromQuests        = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 0);
+            enableMaxSkill          = sConfigMgr->GetOption<bool>("LearnSpells.MaxSkill.Enabled", 0);
+            maxSkillMaxLevel        = sConfigMgr->GetOption<int32>("LearnSpells.MaxSkill.MaxLevel", 60);
+            enableRiding            = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Enabled", 0);
+            enableApprenticeRiding  = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Apprentice.Enabled", 0);
+            enableJourneymanRiding  = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Journeyman.Enabled", 0);
+            enableExpertRiding      = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Expert.Enabled", 0);
+            enableArtisanRiding     = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Artisan.Enabled", 0);
+            enableColdWeatherFlying = sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeather.Enabled", 0);
+        }
 
         void OnStartup() override
         {
@@ -183,112 +320,8 @@ class LearnSpellsData : public WorldScript
         }
 };
 
-class LearnSpells : public PlayerScript
-{
-    public:
-        LearnSpells() : PlayerScript("LearnSpells") {}
-
-        void OnLogin(Player* player) override
-        {
-            if (sConfigMgr->GetOption<bool>("LearnSpells.OnLogin.Enabled", 0))
-                LearnAllSpells(player);
-        }
-
-        void OnLevelChanged(Player* player, uint8 oldLevel) override
-        {
-            if (sConfigMgr->GetOption<bool>("LearnSpells.OnLevelUp.Enabled", 0))
-                LearnAllSpells(player);
-        }
-
-    private:
-        void LearnAllSpells(Player* player)
-        {
-            if (sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells.Enabled", 0))
-                LearnSpellsForNewLevel(player);
-
-            if (sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks.Enabled", 0))
-                LearnTalentRanksForNewLevel(player);
-
-            if (sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies.Enabled", 0))
-                LearnProficienciesForNewLevel(player);
-
-            if (sConfigMgr->GetOption<bool>("LearnSpells.Riding.Enabled", 0))
-                LearnMountsForNewLevel(player);
-
-            if (sConfigMgr->GetOption<bool>("LearnSpells.MaxSkill.Enabled", 0))
-                MaxAllWeaponSkills(player);
-        }
-
-        void LearnSpellsForNewLevel(Player* player)
-        {
-            for (int i = 0; i < classSpells.size(); i++)
-            {
-                if (classSpells[i].RequiresQuest == 1 && !sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 0))
-                    continue;
-
-                if (classSpells[i].RaceId == -1 || classSpells[i].RaceId == player->getRace())
-                    if (classSpells[i].ClassId == player->getClass())
-                        if (player->getLevel() >= classSpells[i].RequiredLevel)
-                            if (classSpells[i].RequiredSpellId == -1 || player->HasSpell(classSpells[i].RequiredSpellId))
-                                if (!player->HasSpell(classSpells[i].SpellId))
-                                    player->learnSpell(classSpells[i].SpellId);
-            }
-        }
-
-        void LearnTalentRanksForNewLevel(Player* player)
-        {
-            for (int i = 0; i < talentRanks.size(); i++)
-            {
-                if (talentRanks[i].ClassId == player->getClass())
-                    if (player->getLevel() >= talentRanks[i].RequiredLevel)
-                        if (player->HasSpell(talentRanks[i].RequiredSpellId))
-                            if (!player->HasSpell(talentRanks[i].SpellId))
-                                player->learnSpell(talentRanks[i].SpellId);
-            }
-        }
-
-        void LearnProficienciesForNewLevel(Player* player)
-        {
-            for (int i = 0; i < proficiencies.size(); i++)
-            {
-                if (proficiencies[i].ClassId == player->getClass())
-                    if (player->getLevel() >= proficiencies[i].RequiredLevel)
-                        if (!player->HasSpell(proficiencies[i].SpellId))
-                            player->learnSpell(proficiencies[i].SpellId);
-            }
-        }
-
-        void MaxAllWeaponSkills(Player* player)
-        {
-            if (player->getLevel() <= sConfigMgr->GetOption<int32>("LearnSpells.MaxSkill.MaxLevel", 60))
-                player->UpdateSkillsToMaxSkillsForLevel();
-        }
-
-        void LearnMountsForNewLevel(Player* player)
-        {
-            for (int i = 0; i < mounts.size(); i++)
-            {
-                if ((mounts[i].SpellId == 33388 && !sConfigMgr->GetOption<bool>("LearnSpells.Riding.Apprentice.Enabled", 0)) || 
-                    (mounts[i].SpellId == 33391 && !sConfigMgr->GetOption<bool>("LearnSpells.Riding.Journeyman.Enabled", 0)) || 
-                    (mounts[i].SpellId == 34090 && !sConfigMgr->GetOption<bool>("LearnSpells.Riding.Expert.Enabled", 0)) || 
-                    (mounts[i].SpellId == 34091 && !sConfigMgr->GetOption<bool>("LearnSpells.Riding.Artisan.Enabled", 0)) || 
-                    (mounts[i].SpellId == 54197 && !sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeather.Enabled", 0)) || 
-                    (mounts[i].RequiresQuest == 1 && !sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 0)))
-                    continue;
-
-                if (mounts[i].RaceId == -1 || mounts[i].RaceId == player->getRace())
-                    if (mounts[i].ClassId == -1 || mounts[i].ClassId == player->getClass())
-                        if (mounts[i].TeamId == -1 || mounts[i].TeamId == player->GetTeamId())
-                            if (mounts[i].RequiredSpellId == -1 || player->HasSpell(mounts[i].RequiredSpellId))
-                                if (player->getLevel() >= mounts[i].RequiredLevel)
-                                    if (!player->HasSpell(mounts[i].SpellId))
-                                        player->learnSpell(mounts[i].SpellId);
-            }
-        }
-};
-
 void AddLearnSpellsScripts()
 {
-    new LearnSpellsData();
-    new LearnSpells();
+    new LearnSpellsPlayer();
+    new LearnSpellsWorld();
 }
