@@ -100,6 +100,9 @@ class LearnSpellsPlayer : public PlayerScript
 
             if (enableMaxSkill)
                 MaxAllWeaponSkills(player);
+
+            if (enableClassSpells && enableFromQuests && player->getClass() == CLASS_SHAMAN)
+                AddShamanTotems(player);
         }
 
         void LearnSpellsForNewLevel(Player* player)
@@ -166,6 +169,23 @@ class LearnSpellsPlayer : public PlayerScript
                                 if (player->getLevel() >= mounts[i].RequiredLevel)
                                     if (!player->HasSpell(mounts[i].SpellId))
                                         player->learnSpell(mounts[i].SpellId);
+            }
+        }
+
+        void AddShamanTotems(Player* player)
+        {
+            uint32 totems[4][3] = {
+                {5175, 2, 4}, // Earth Totem, TotemCategory 2, Level 4
+                {5176, 4, 10}, // Fire Totem, TotemCategory 4, Level 10
+                {5177, 5, 20}, // Water Totem, TotemCategory 5, Level 20
+                {5178, 3, 30} // Air Totem, TotemCategory 3, Level 30
+            };
+
+            for (int i = 0; i <= 3; i++)
+            {
+                if (player->getLevel() >= totems[i][2])
+                    if (!player->HasItemTotemCategory(totems[i][1]))
+                        player->AddItem(totems[i][0], 1);
             }
         }
 };
