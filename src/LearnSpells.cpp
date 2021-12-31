@@ -4,38 +4,38 @@
 
 struct ClassSpells
 {
-    int32 RaceId;
-    int32 ClassId;
-    uint32 SpellId;
-    uint32 RequiredLevel;
-    uint32 RequiredSpellId;
-    uint32 RequiresQuest;
+    int RaceId;
+    int ClassId;
+    int SpellId;
+    int RequiredLevel;
+    int RequiredSpellId;
+    int RequiresQuest;
 };
 
 struct TalentRanks
 {
-    int32 ClassId;
-    uint32 SpellId;
-    uint32 RequiredLevel;
-    uint32 RequiredSpellId;
+    int ClassId;
+    int SpellId;
+    int RequiredLevel;
+    int RequiredSpellId;
 };
 
 struct Proficiencies
 {
-    int32 ClassId;
-    uint32 SpellId;
-    uint32 RequiredLevel;
+    int ClassId;
+    int SpellId;
+    int RequiredLevel;
 };
 
 struct Mounts
 {
-    int32 RaceId;
-    int32 ClassId;
-    int32 TeamId;
-    uint32 SpellId;
-    uint32 RequiredLevel;
-    uint32 RequiredSpellId;
-    uint32 RequiresQuest;
+    int RaceId;
+    int ClassId;
+    int TeamId;
+    int SpellId;
+    int RequiredLevel;
+    int RequiredSpellId;
+    int RequiresQuest;
 };
 
 std::vector<ClassSpells> classSpells;
@@ -58,7 +58,7 @@ bool enableTalentRanks;
 bool enableProficiencies;
 bool enableFromQuests;
 bool enableMaxSkill;
-uint32 maxSkillMaxLevel;
+int maxSkillMaxLevel;
 bool enableRiding;
 bool enableApprenticeRiding;
 bool enableJourneymanRiding;
@@ -77,7 +77,7 @@ class LearnSpellsPlayer : public PlayerScript
                 LearnAllSpells(player);
         }
 
-        void OnLevelChanged(Player* player, uint8 oldLevel) override
+        void OnLevelChanged(Player* player, uint8 /*oldLevel*/) override
         {
             if (enableOnLevelUp)
                 LearnAllSpells(player);
@@ -107,40 +107,40 @@ class LearnSpellsPlayer : public PlayerScript
 
         void LearnSpellsForNewLevel(Player* player)
         {
-            for (int i = 0; i < classSpells.size(); i++)
+            for (auto& classSpell : classSpells)
             {
-                if (classSpells[i].RequiresQuest == 1 && !enableFromQuests)
+                if (classSpell.RequiresQuest == 1 && !enableFromQuests)
                     continue;
 
-                if (classSpells[i].RaceId == -1 || classSpells[i].RaceId == player->getRace())
-                    if (classSpells[i].ClassId == player->getClass())
-                        if (player->getLevel() >= classSpells[i].RequiredLevel)
-                            if (classSpells[i].RequiredSpellId == -1 || player->HasSpell(classSpells[i].RequiredSpellId))
-                                if (!player->HasSpell(classSpells[i].SpellId))
-                                    player->learnSpell(classSpells[i].SpellId);
+                if (classSpell.RaceId == -1 || classSpell.RaceId == player->getRace())
+                    if (classSpell.ClassId == player->getClass())
+                        if (player->getLevel() >= classSpell.RequiredLevel)
+                            if (classSpell.RequiredSpellId == -1 || player->HasSpell(classSpell.RequiredSpellId))
+                                if (!player->HasSpell(classSpell.SpellId))
+                                    player->learnSpell(classSpell.SpellId);
             }
         }
 
         void LearnTalentRanksForNewLevel(Player* player)
         {
-            for (int i = 0; i < talentRanks.size(); i++)
+            for (auto& talentRank : talentRanks)
             {
-                if (talentRanks[i].ClassId == player->getClass())
-                    if (player->getLevel() >= talentRanks[i].RequiredLevel)
-                        if (player->HasSpell(talentRanks[i].RequiredSpellId))
-                            if (!player->HasSpell(talentRanks[i].SpellId))
-                                player->learnSpell(talentRanks[i].SpellId);
+                if (talentRank.ClassId == player->getClass())
+                    if (player->getLevel() >= talentRank.RequiredLevel)
+                        if (player->HasSpell(talentRank.RequiredSpellId))
+                            if (!player->HasSpell(talentRank.SpellId))
+                                player->learnSpell(talentRank.SpellId);
             }
         }
 
         void LearnProficienciesForNewLevel(Player* player)
         {
-            for (int i = 0; i < proficiencies.size(); i++)
+            for (auto& proficiency : proficiencies)
             {
-                if (proficiencies[i].ClassId == player->getClass())
-                    if (player->getLevel() >= proficiencies[i].RequiredLevel)
-                        if (!player->HasSpell(proficiencies[i].SpellId))
-                            player->learnSpell(proficiencies[i].SpellId);
+                if (proficiency.ClassId == player->getClass())
+                    if (player->getLevel() >= proficiency.RequiredLevel)
+                        if (!player->HasSpell(proficiency.SpellId))
+                            player->learnSpell(proficiency.SpellId);
             }
         }
 
@@ -152,23 +152,23 @@ class LearnSpellsPlayer : public PlayerScript
 
         void LearnMountsForNewLevel(Player* player)
         {
-            for (int i = 0; i < mounts.size(); i++)
+            for (auto& mount : mounts)
             {
-                if ((mounts[i].SpellId == 33388 && !enableApprenticeRiding) || 
-                    (mounts[i].SpellId == 33391 && !enableJourneymanRiding) || 
-                    (mounts[i].SpellId == 34090 && !enableExpertRiding) || 
-                    (mounts[i].SpellId == 34091 && !enableArtisanRiding) || 
-                    (mounts[i].SpellId == 54197 && !enableColdWeatherFlying) || 
-                    (mounts[i].RequiresQuest == 1 && !enableFromQuests))
+                if ((mount.SpellId == 33388 && !enableApprenticeRiding) || 
+                    (mount.SpellId == 33391 && !enableJourneymanRiding) || 
+                    (mount.SpellId == 34090 && !enableExpertRiding) || 
+                    (mount.SpellId == 34091 && !enableArtisanRiding) || 
+                    (mount.SpellId == 54197 && !enableColdWeatherFlying) || 
+                    (mount.RequiresQuest == 1 && !enableFromQuests))
                     continue;
 
-                if (mounts[i].RaceId == -1 || mounts[i].RaceId == player->getRace())
-                    if (mounts[i].ClassId == -1 || mounts[i].ClassId == player->getClass())
-                        if (mounts[i].TeamId == -1 || mounts[i].TeamId == player->GetTeamId())
-                            if (mounts[i].RequiredSpellId == -1 || player->HasSpell(mounts[i].RequiredSpellId))
-                                if (player->getLevel() >= mounts[i].RequiredLevel)
-                                    if (!player->HasSpell(mounts[i].SpellId))
-                                        player->learnSpell(mounts[i].SpellId);
+                if (mount.RaceId == -1 || mount.RaceId == player->getRace())
+                    if (mount.ClassId == -1 || mount.ClassId == player->getClass())
+                        if (mount.TeamId == -1 || mount.TeamId == player->GetTeamId())
+                            if (mount.RequiredSpellId == -1 || player->HasSpell(mount.RequiredSpellId))
+                                if (player->getLevel() >= mount.RequiredLevel)
+                                    if (!player->HasSpell(mount.SpellId))
+                                        player->learnSpell(mount.SpellId);
             }
         }
 
@@ -243,10 +243,10 @@ class LearnSpellsWorld : public WorldScript
                 classSpells.push_back(ClassSpells());
                 classSpells[i].RaceId          = fields[0].GetInt32();
                 classSpells[i].ClassId         = fields[1].GetInt32();
-                classSpells[i].SpellId         = fields[2].GetUInt32();
-                classSpells[i].RequiredLevel   = fields[3].GetUInt32();
-                classSpells[i].RequiredSpellId = fields[4].GetUInt32();
-                classSpells[i].RequiresQuest   = fields[5].GetUInt32();
+                classSpells[i].SpellId         = fields[2].GetInt32();
+                classSpells[i].RequiredLevel   = fields[3].GetInt32();
+                classSpells[i].RequiredSpellId = fields[4].GetInt32();
+                classSpells[i].RequiresQuest   = fields[5].GetInt32();
 
                 i++;
             } while (result->NextRow());
@@ -271,9 +271,9 @@ class LearnSpellsWorld : public WorldScript
 
                 talentRanks.push_back(TalentRanks());
                 talentRanks[i].ClassId         = fields[0].GetInt32();
-                talentRanks[i].SpellId         = fields[1].GetUInt32();
-                talentRanks[i].RequiredLevel   = fields[2].GetUInt32();
-                talentRanks[i].RequiredSpellId = fields[3].GetUInt32();
+                talentRanks[i].SpellId         = fields[1].GetInt32();
+                talentRanks[i].RequiredLevel   = fields[2].GetInt32();
+                talentRanks[i].RequiredSpellId = fields[3].GetInt32();
 
                 i++;
             } while (result->NextRow());
@@ -299,8 +299,8 @@ class LearnSpellsWorld : public WorldScript
 
                 proficiencies.push_back(Proficiencies());
                 proficiencies[i].ClassId       = fields[0].GetInt32();
-                proficiencies[i].SpellId       = fields[1].GetUInt32();
-                proficiencies[i].RequiredLevel = fields[2].GetUInt32();
+                proficiencies[i].SpellId       = fields[1].GetInt32();
+                proficiencies[i].RequiredLevel = fields[2].GetInt32();
 
                 i++;
             } while (result->NextRow());
@@ -328,10 +328,10 @@ class LearnSpellsWorld : public WorldScript
                 mounts[i].RaceId          = fields[0].GetInt32();
                 mounts[i].ClassId         = fields[1].GetInt32();
                 mounts[i].TeamId          = fields[2].GetInt32();
-                mounts[i].SpellId         = fields[3].GetUInt32();
-                mounts[i].RequiredLevel   = fields[4].GetUInt32();
-                mounts[i].RequiredSpellId = fields[5].GetUInt32();
-                mounts[i].RequiresQuest   = fields[6].GetUInt32();
+                mounts[i].SpellId         = fields[3].GetInt32();
+                mounts[i].RequiredLevel   = fields[4].GetInt32();
+                mounts[i].RequiredSpellId = fields[5].GetInt32();
+                mounts[i].RequiresQuest   = fields[6].GetInt32();
 
                 i++;
             } while (result->NextRow());
