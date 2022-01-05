@@ -202,7 +202,6 @@ INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `requi
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 2, 5615, 36, 5614, 'Exorcism (Rank 3)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 2, 10324, 36, 10322, 'Redemption (Rank 3)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 2, 10278, 38, 5599, 'Hand of Protection (Rank 3)');
-INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 2, 20186, 38, -1, 'Judgement of Wisdom (Rank 1)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 2, 20166, 38, -1, 'Seal of Wisdom');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 2, 3472, 38, 1042, 'Holy Light (Rank 6)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 2, 5589, 40, 5588, 'Hammer of Justice (Rank 3)');
