@@ -195,7 +195,7 @@ class LearnSpellsWorld : public WorldScript
     public:
         LearnSpellsWorld() : WorldScript("LearnSpellsWorld") { }
 
-        void OnAfterConfigLoad(bool /*reload*/) override
+        void OnAfterConfigLoad(bool reload) override
         {
             enableOnLogin           = sConfigMgr->GetOption<bool>("LearnSpells.OnLogin.Enabled", 0);
             enableOnLevelUp         = sConfigMgr->GetOption<bool>("LearnSpells.OnLevelUp.Enabled", 0);
@@ -211,9 +211,20 @@ class LearnSpellsWorld : public WorldScript
             enableExpertRiding      = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Expert.Enabled", 0);
             enableArtisanRiding     = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Artisan.Enabled", 0);
             enableColdWeatherFlying = sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeather.Enabled", 0);
+
+            if (reload)
+            {
+                LoadSpells();
+            }
         }
 
         void OnStartup() override
+        {
+            LoadSpells();
+        }
+
+    private:
+        void LoadSpells()
         {
             LOG_INFO("server.loading", "Loading spells...");
             {
@@ -224,7 +235,6 @@ class LearnSpellsWorld : public WorldScript
             }
         }
 
-    private:
         void LoadClassSpells()
         {
             QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", SpellType::CLASS);
