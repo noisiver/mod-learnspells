@@ -245,6 +245,8 @@ class LearnSpellsWorld : public WorldScript
                 return;
             }
 
+            classSpells.clear();
+
             int i = 0;
             do
             {
@@ -274,6 +276,8 @@ class LearnSpellsWorld : public WorldScript
                 return;
             }
 
+            talentRanks.clear();
+
             int i = 0;
             do
             {
@@ -301,8 +305,9 @@ class LearnSpellsWorld : public WorldScript
                 return;
             }
 
-            int i = 0;
+            proficiencies.clear();
 
+            int i = 0;
             do
             {
                 Field* fields = result->Fetch();
@@ -328,8 +333,9 @@ class LearnSpellsWorld : public WorldScript
                 return;
             }
 
-            int i = 0;
+            mounts.clear();
 
+            int i = 0;
             do
             {
                 Field* fields = result->Fetch();
