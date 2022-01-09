@@ -2131,7 +2131,6 @@ INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_Spell_id`, `comment`) VALUES (2, -1, 7, -1, 198, 0, -1, 'One-Handed Maces');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_Spell_id`, `comment`) VALUES (2, -1, 7, -1, 199, 0, -1, 'Two-Handed Maces');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_Spell_id`, `comment`) VALUES (2, -1, 7, -1, 227, 0, -1, 'Staves');
-INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_Spell_id`, `comment`) VALUES (2, -1, 7, -1, 674, 0, -1, 'Dual Wield (Passive)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_Spell_id`, `comment`) VALUES (2, -1, 7, -1, 1180, 0, -1, 'Daggers');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_Spell_id`, `comment`) VALUES (2, -1, 7, -1, 15590, 0, -1, 'Fist Weapons');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_Spell_id`, `comment`) VALUES (2, -1, 7, -1, 8737, 40, -1, 'Mail');
