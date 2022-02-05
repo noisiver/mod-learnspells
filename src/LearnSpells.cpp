@@ -237,7 +237,7 @@ class LearnSpellsWorld : public WorldScript
 
         void LoadClassSpells()
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", SpellType::CLASS);
+            QueryResult result = WorldDatabase.Query("SELECT `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learnspells` WHERE `type`={} ORDER BY `id` ASC", SpellType::CLASS);
 
             if (!result)
             {
@@ -253,12 +253,12 @@ class LearnSpellsWorld : public WorldScript
                 Field* fields = result->Fetch();
 
                 classSpells.push_back(ClassSpells());
-                classSpells[i].RaceId          = fields[0].GetInt32();
-                classSpells[i].ClassId         = fields[1].GetInt32();
-                classSpells[i].SpellId         = fields[2].GetInt32();
-                classSpells[i].RequiredLevel   = fields[3].GetInt32();
-                classSpells[i].RequiredSpellId = fields[4].GetInt32();
-                classSpells[i].RequiresQuest   = fields[5].GetInt32();
+                classSpells[i].RaceId          = fields[0].Get<int32>();
+                classSpells[i].ClassId         = fields[1].Get<int32>();
+                classSpells[i].SpellId         = fields[2].Get<int32>();
+                classSpells[i].RequiredLevel   = fields[3].Get<int32>();
+                classSpells[i].RequiredSpellId = fields[4].Get<int32>();
+                classSpells[i].RequiresQuest   = fields[5].Get<int32>();
 
                 i++;
             } while (result->NextRow());
@@ -268,7 +268,7 @@ class LearnSpellsWorld : public WorldScript
 
         void LoadTalentRanks()
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT `class_id`, `spell_id`, `required_level`, `required_spell_id` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", SpellType::TALENT);
+            QueryResult result = WorldDatabase.Query("SELECT `class_id`, `spell_id`, `required_level`, `required_spell_id` FROM `mod_learnspells` WHERE `type`={} ORDER BY `id` ASC", SpellType::TALENT);
 
             if (!result)
             {
@@ -284,10 +284,10 @@ class LearnSpellsWorld : public WorldScript
                 Field* fields = result->Fetch();
 
                 talentRanks.push_back(TalentRanks());
-                talentRanks[i].ClassId         = fields[0].GetInt32();
-                talentRanks[i].SpellId         = fields[1].GetInt32();
-                talentRanks[i].RequiredLevel   = fields[2].GetInt32();
-                talentRanks[i].RequiredSpellId = fields[3].GetInt32();
+                talentRanks[i].ClassId         = fields[0].Get<int32>();
+                talentRanks[i].SpellId         = fields[1].Get<int32>();
+                talentRanks[i].RequiredLevel   = fields[2].Get<int32>();
+                talentRanks[i].RequiredSpellId = fields[3].Get<int32>();
 
                 i++;
             } while (result->NextRow());
@@ -297,7 +297,7 @@ class LearnSpellsWorld : public WorldScript
 
         void LoadProficiencies()
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT `class_id`, `spell_id`, `required_level` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", SpellType::PROFICIENCY);
+            QueryResult result = WorldDatabase.Query("SELECT `class_id`, `spell_id`, `required_level` FROM `mod_learnspells` WHERE `type`={} ORDER BY `id` ASC", SpellType::PROFICIENCY);
 
             if (!result)
             {
@@ -313,9 +313,9 @@ class LearnSpellsWorld : public WorldScript
                 Field* fields = result->Fetch();
 
                 proficiencies.push_back(Proficiencies());
-                proficiencies[i].ClassId       = fields[0].GetInt32();
-                proficiencies[i].SpellId       = fields[1].GetInt32();
-                proficiencies[i].RequiredLevel = fields[2].GetInt32();
+                proficiencies[i].ClassId       = fields[0].Get<int32>();
+                proficiencies[i].SpellId       = fields[1].Get<int32>();
+                proficiencies[i].RequiredLevel = fields[2].Get<int32>();
 
                 i++;
             } while (result->NextRow());
@@ -325,7 +325,7 @@ class LearnSpellsWorld : public WorldScript
 
         void LoadMounts()
         {
-            QueryResult result = WorldDatabase.PQuery("SELECT `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learnspells` WHERE `type`=%u ORDER BY `id` ASC", SpellType::MOUNT);
+            QueryResult result = WorldDatabase.Query("SELECT `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest` FROM `mod_learnspells` WHERE `type`={} ORDER BY `id` ASC", SpellType::MOUNT);
 
             if (!result)
             {
@@ -341,13 +341,13 @@ class LearnSpellsWorld : public WorldScript
                 Field* fields = result->Fetch();
 
                 mounts.push_back(Mounts());
-                mounts[i].RaceId          = fields[0].GetInt32();
-                mounts[i].ClassId         = fields[1].GetInt32();
-                mounts[i].TeamId          = fields[2].GetInt32();
-                mounts[i].SpellId         = fields[3].GetInt32();
-                mounts[i].RequiredLevel   = fields[4].GetInt32();
-                mounts[i].RequiredSpellId = fields[5].GetInt32();
-                mounts[i].RequiresQuest   = fields[6].GetInt32();
+                mounts[i].RaceId          = fields[0].Get<int32>();
+                mounts[i].ClassId         = fields[1].Get<int32>();
+                mounts[i].TeamId          = fields[2].Get<int32>();
+                mounts[i].SpellId         = fields[3].Get<int32>();
+                mounts[i].RequiredLevel   = fields[4].Get<int32>();
+                mounts[i].RequiredSpellId = fields[5].Get<int32>();
+                mounts[i].RequiresQuest   = fields[6].Get<int32>();
 
                 i++;
             } while (result->NextRow());
