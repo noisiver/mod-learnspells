@@ -263,7 +263,7 @@ class LearnSpellsWorld : public WorldScript
                 i++;
             } while (result->NextRow());
 
-            LOG_INFO("server.loading", ">> Loaded %i class spells", i);
+            LOG_INFO("server.loading", ">> Loaded {} class spells", i);
         }
 
         void LoadTalentRanks()
@@ -292,7 +292,7 @@ class LearnSpellsWorld : public WorldScript
                 i++;
             } while (result->NextRow());
 
-            LOG_INFO("server.loading", ">> Loaded %i talent ranks", i);
+            LOG_INFO("server.loading", ">> Loaded {} talent ranks", i);
         }
 
         void LoadProficiencies()
@@ -320,7 +320,7 @@ class LearnSpellsWorld : public WorldScript
                 i++;
             } while (result->NextRow());
 
-            LOG_INFO("server.loading", ">> Loaded %i proficiencies", i);
+            LOG_INFO("server.loading", ">> Loaded {} proficiencies", i);
         }
 
         void LoadMounts()
@@ -352,7 +352,7 @@ class LearnSpellsWorld : public WorldScript
                 i++;
             } while (result->NextRow());
 
-            LOG_INFO("server.loading", ">> Loaded %i mounts", i);
+            LOG_INFO("server.loading", ">> Loaded {} mounts", i);
         }
 };
 
