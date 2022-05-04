@@ -2249,11 +2249,11 @@ INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, -1, -1, 1, 32296, 70, 34091, 'Swift Yellow Wind Rider');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, -1, -1, 1, 32297, 70, 34091, 'Swift Purple Wind Rider');
 -- Mounts: Paladin
-INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, 10, 2, 1, 13819, 20, 33388, 'Warhorse');
+INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, 10, 2, 1, 34769, 20, 33388, 'Warhorse');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest`, `comment`) VALUES (3, 10, 2, 1, 34767, 40, 33391, 1, 'Charger');
-INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, 1, 2, 0, 34769, 20, 33388, 'Summon Warhorse');
-INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, 3, 2, 0, 34769, 20, 33388, 'Summon Warhorse');
-INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, 11, 2, 0, 34769, 20, 33388, 'Summon Warhorse');
+INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, 1, 2, 0, 13819, 20, 33388, 'Summon Warhorse');
+INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, 3, 2, 0, 13819, 20, 33388, 'Summon Warhorse');
+INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (3, 11, 2, 0, 13819, 20, 33388, 'Summon Warhorse');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest`, `comment`) VALUES (3, 1, 2, 0, 23214, 40, 33391, 1, 'Summon Charger');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest`, `comment`) VALUES (3, 3, 2, 0, 23214, 40, 33391, 1, 'Summon Charger');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `team_id`, `spell_id`, `required_level`, `required_spell_id`, `requires_quest`, `comment`) VALUES (3, 11, 2, 0, 23214, 40, 33391, 1, 'Summon Charger');
