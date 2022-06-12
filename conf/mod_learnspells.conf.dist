@@ -1,22 +1,22 @@
 [worldserver]
 
 # Learn spells when entering the world
-LearnSpells.OnLogin.Enabled = 0
+LearnSpells.OnLogin.Enabled = 1
 
 # Learn spells when leveling up
-LearnSpells.OnLevelUp.Enabled = 0
+LearnSpells.OnLevelUp.Enabled = 1
 
 # Learn class-specific spells
-LearnSpells.ClassSpells.Enabled = 0
+LearnSpells.ClassSpells.Enabled = 1
 
 # Learn ranks of known talents
-LearnSpells.TalentRanks.Enabled = 0
+LearnSpells.TalentRanks.Enabled = 1
 
 # Learn weapon and defense skills
-LearnSpells.Proficiencies.Enabled = 0
+LearnSpells.Proficiencies.Enabled = 1
 
 # Learn spells obtained through quests
-LearnSpells.SpellsFromQuests.Enabled = 0
+LearnSpells.SpellsFromQuests.Enabled = 1
 
 # Set a players weapon skills to their max value
 LearnSpells.MaxSkill.Enabled = 0

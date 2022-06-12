@@ -202,12 +202,12 @@ public:
 
     void OnAfterConfigLoad(bool reload) override
     {
-        enableOnLogin = sConfigMgr->GetOption<bool>("LearnSpells.OnLogin.Enabled", 0);
-        enableOnLevelUp = sConfigMgr->GetOption<bool>("LearnSpells.OnLevelUp.Enabled", 0);
-        enableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells.Enabled", 0);
-        enableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks.Enabled", 0);
-        enableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies.Enabled", 0);
-        enableFromQuests = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 0);
+        enableOnLogin = sConfigMgr->GetOption<bool>("LearnSpells.OnLogin.Enabled", 1);
+        enableOnLevelUp = sConfigMgr->GetOption<bool>("LearnSpells.OnLevelUp.Enabled", 1);
+        enableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells.Enabled", 1);
+        enableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks.Enabled", 1);
+        enableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies.Enabled", 1);
+        enableFromQuests = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 1);
         enableMaxSkill = sConfigMgr->GetOption<bool>("LearnSpells.MaxSkill.Enabled", 0);
         maxSkillMaxLevel = sConfigMgr->GetOption<int32>("LearnSpells.MaxSkill.MaxLevel", 60);
         enableRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Enabled", 0);
