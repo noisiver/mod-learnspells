@@ -1,6 +1,10 @@
 # Learn Spells
 This is a module for [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk).
 
+This module has been ported to LUA, used by installing the [Eluna](https://github.com/azerothcore/mod-eluna) module, and will not receive any new features.
+
+The LUA script can be found at [LearnSpells](https://github.com/tkn963/lua-learnspells).
+
 # Features
 The module will give players new spells when leveling up or when entering the world.
 
