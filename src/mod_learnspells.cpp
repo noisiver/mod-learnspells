@@ -51,13 +51,10 @@ enum SpellType
     MOUNT
 };
 
-bool enableOnLogin;
-bool enableOnLevelUp;
 bool enableClassSpells;
 bool enableTalentRanks;
 bool enableProficiencies;
 bool enableFromQuests;
-bool enableRiding;
 bool enableApprenticeRiding;
 bool enableJourneymanRiding;
 bool enableExpertRiding;
@@ -96,7 +93,7 @@ private:
         if (enableProficiencies)
             LearnProficienciesForNewLevel(player);
 
-        if (enableRiding)
+        if (enableApprenticeRiding || enableJourneymanRiding || enableExpertRiding || enableArtisanRiding || enableColdWeatherFlying)
             LearnMountsForNewLevel(player);
 
         if (enableClassSpells && enableFromQuests && player->getClass() == CLASS_SHAMAN)
@@ -189,13 +186,10 @@ public:
 
     void OnAfterConfigLoad(bool reload) override
     {
-        enableOnLogin = sConfigMgr->GetOption<bool>("LearnSpells.OnLogin.Enabled", 1);
-        enableOnLevelUp = sConfigMgr->GetOption<bool>("LearnSpells.OnLevelUp.Enabled", 1);
         enableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells.Enabled", 1);
         enableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks.Enabled", 1);
         enableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies.Enabled", 1);
         enableFromQuests = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 1);
-        enableRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Enabled", 0);
         enableApprenticeRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Apprentice.Enabled", 0);
         enableJourneymanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Journeyman.Enabled", 0);
         enableExpertRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Expert.Enabled", 0);

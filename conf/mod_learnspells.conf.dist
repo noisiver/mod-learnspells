@@ -12,9 +12,6 @@ LearnSpells.Proficiencies.Enabled = 1
 # Learn spells normally obtained from quests
 LearnSpells.SpellsFromQuests.Enabled = 1
 
-# Learn riding and mount spells
-LearnSpells.Riding.Enabled = 0
-
 # Learn apprentice (75%) riding and mount spells
 LearnSpells.Riding.Apprentice.Enabled = 0
 
