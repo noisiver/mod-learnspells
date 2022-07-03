@@ -1,11 +1,5 @@
 [worldserver]
 
-# Learn spells when entering the world
-LearnSpells.OnLogin.Enabled = 1
-
-# Learn spells when leveling up
-LearnSpells.OnLevelUp.Enabled = 1
-
 # Learn class-specific spells
 LearnSpells.ClassSpells.Enabled = 1
 

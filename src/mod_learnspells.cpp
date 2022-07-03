@@ -77,14 +77,12 @@ public:
 
     void OnLevelChanged(Player* player, uint8 /*oldLevel*/) override
     {
-        if (enableOnLevelUp)
-            LearnAllSpells(player);
+        LearnAllSpells(player);
     }
 
     void OnLogin(Player* player) override
     {
-        if (enableOnLogin)
-            LearnAllSpells(player);
+        LearnAllSpells(player);
     }
 private:
     void LearnAllSpells(Player* player)
