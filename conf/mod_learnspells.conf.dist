@@ -1,5 +1,8 @@
 [worldserver]
 
+# Allow gamemasters to learn spells
+LearnSpells.Gamemasters = 0
+
 # Learn class-specific spells
 LearnSpells.ClassSpells = 1
 

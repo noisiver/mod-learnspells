@@ -51,6 +51,7 @@ enum SpellType
     MOUNT
 };
 
+bool enableGamemasters;
 bool enableClassSpells;
 bool enableTalentRanks;
 bool enableProficiencies;
@@ -69,19 +70,19 @@ public:
     void OnPlayerLearnTalents(Player* player, uint32 /*talentId*/, uint32 /*talentRank*/, uint32 /*spellid*/) override
     {
         if (enableTalentRanks)
-            if (player->GetSession()->GetSecurity() == SEC_PLAYER)
+            if (player->GetSession()->GetSecurity() == SEC_PLAYER || enableGamemasters)
                 LearnTalentRanksForNewLevel(player);
     }
 
     void OnLevelChanged(Player* player, uint8 /*oldLevel*/) override
     {
-        if (player->GetSession()->GetSecurity() == SEC_PLAYER)
+        if (player->GetSession()->GetSecurity() == SEC_PLAYER || enableGamemasters)
             LearnAllSpells(player);
     }
 
     void OnLogin(Player* player) override
     {
-        if (player->GetSession()->GetSecurity() == SEC_PLAYER)
+        if (player->GetSession()->GetSecurity() == SEC_PLAYER || enableGamemasters)
             LearnAllSpells(player);
     }
 private:
@@ -189,6 +190,7 @@ public:
 
     void OnAfterConfigLoad(bool reload) override
     {
+        enableGamemasters = sConfigMgr->GetOption<bool>("LearnSpells.Gamemasters", 0);
         enableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells", 1);
         enableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks", 1);
         enableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies", 1);
