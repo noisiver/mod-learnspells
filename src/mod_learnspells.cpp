@@ -57,8 +57,6 @@ bool enableClassSpells;
 bool enableTalentRanks;
 bool enableProficiencies;
 bool enableFromQuests;
-bool enableMaxSkill;
-int maxSkillMaxLevel;
 bool enableRiding;
 bool enableApprenticeRiding;
 bool enableJourneymanRiding;
@@ -103,9 +101,6 @@ private:
         if (enableRiding)
             LearnMountsForNewLevel(player);
 
-        if (enableMaxSkill)
-            MaxAllWeaponSkills(player);
-
         if (enableClassSpells && enableFromQuests && player->getClass() == CLASS_SHAMAN)
             AddShamanTotems(player);
     }
@@ -147,12 +142,6 @@ private:
                     if (!player->HasSpell(proficiency.SpellId))
                         player->learnSpell(proficiency.SpellId);
         }
-    }
-
-    void MaxAllWeaponSkills(Player* player)
-    {
-        if (player->getLevel() <= maxSkillMaxLevel)
-            player->UpdateSkillsToMaxSkillsForLevel();
     }
 
     void LearnMountsForNewLevel(Player* player)
@@ -208,8 +197,6 @@ public:
         enableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks.Enabled", 1);
         enableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies.Enabled", 1);
         enableFromQuests = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 1);
-        enableMaxSkill = sConfigMgr->GetOption<bool>("LearnSpells.MaxSkill.Enabled", 0);
-        maxSkillMaxLevel = sConfigMgr->GetOption<int32>("LearnSpells.MaxSkill.MaxLevel", 60);
         enableRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Enabled", 0);
         enableApprenticeRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Apprentice.Enabled", 0);
         enableJourneymanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Journeyman.Enabled", 0);

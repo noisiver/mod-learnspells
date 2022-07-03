@@ -18,12 +18,6 @@ LearnSpells.Proficiencies.Enabled = 1
 # Learn spells normally obtained from quests
 LearnSpells.SpellsFromQuests.Enabled = 1
 
-# Set a players weapon skills to their max value
-LearnSpells.MaxSkill.Enabled = 0
-
-# Max level where a player gets their skills maxed out
-LearnSpells.MaxSkill.MaxLevel = 60
-
 # Learn riding and mount spells
 LearnSpells.Riding.Enabled = 0
 
