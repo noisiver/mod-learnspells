@@ -189,15 +189,15 @@ public:
 
     void OnAfterConfigLoad(bool reload) override
     {
-        enableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells.Enabled", 1);
-        enableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks.Enabled", 1);
-        enableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies.Enabled", 1);
-        enableFromQuests = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests.Enabled", 1);
-        enableApprenticeRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Apprentice.Enabled", 0);
-        enableJourneymanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Journeyman.Enabled", 0);
-        enableExpertRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Expert.Enabled", 0);
-        enableArtisanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Artisan.Enabled", 0);
-        enableColdWeatherFlying = sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeather.Enabled", 0);
+        enableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells", 1);
+        enableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks", 1);
+        enableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies", 1);
+        enableFromQuests = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests", 1);
+        enableApprenticeRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Apprentice", 0);
+        enableJourneymanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Journeyman", 0);
+        enableExpertRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Expert", 0);
+        enableArtisanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Artisan", 0);
+        enableColdWeatherFlying = sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeatherFlying", 0);
 
         if (reload)
             LoadSpells();

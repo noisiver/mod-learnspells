@@ -1,28 +1,28 @@
 [worldserver]
 
 # Learn class-specific spells
-LearnSpells.ClassSpells.Enabled = 1
+LearnSpells.ClassSpells = 1
 
 # Learn ranks of known talents
-LearnSpells.TalentRanks.Enabled = 1
+LearnSpells.TalentRanks = 1
 
 # Learn weapon and defense skills
-LearnSpells.Proficiencies.Enabled = 1
+LearnSpells.Proficiencies = 1
 
 # Learn spells normally obtained from quests
-LearnSpells.SpellsFromQuests.Enabled = 1
+LearnSpells.SpellsFromQuests = 1
 
 # Learn apprentice (75%) riding and mount spells
-LearnSpells.Riding.Apprentice.Enabled = 0
+LearnSpells.Riding.Apprentice = 0
 
 # Learn journeyman (150%) riding and mount spells
-LearnSpells.Riding.Journeyman.Enabled = 0
+LearnSpells.Riding.Journeyman = 0
 
 # Learn expert (225%) riding and mount spells
-LearnSpells.Riding.Expert.Enabled = 0
+LearnSpells.Riding.Expert = 0
 
 # Learn artisan (300%) riding and mount spells
-LearnSpells.Riding.Artisan.Enabled = 0
+LearnSpells.Riding.Artisan = 0
 
 # Learn cold weather flying at level 77
-LearnSpells.Riding.ColdWeather.Enabled = 0
+LearnSpells.Riding.ColdWeatherFlying = 0
