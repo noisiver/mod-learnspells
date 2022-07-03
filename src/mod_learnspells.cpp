@@ -69,17 +69,20 @@ public:
     void OnPlayerLearnTalents(Player* player, uint32 /*talentId*/, uint32 /*talentRank*/, uint32 /*spellid*/) override
     {
         if (enableTalentRanks)
-            LearnTalentRanksForNewLevel(player);
+            if (player->GetSession()->GetSecurity() == SEC_PLAYER)
+                LearnTalentRanksForNewLevel(player);
     }
 
     void OnLevelChanged(Player* player, uint8 /*oldLevel*/) override
     {
-        LearnAllSpells(player);
+        if (player->GetSession()->GetSecurity() == SEC_PLAYER)
+            LearnAllSpells(player);
     }
 
     void OnLogin(Player* player) override
     {
-        LearnAllSpells(player);
+        if (player->GetSession()->GetSecurity() == SEC_PLAYER)
+            LearnAllSpells(player);
     }
 private:
     void LearnAllSpells(Player* player)
