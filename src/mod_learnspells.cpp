@@ -38,10 +38,10 @@ struct Mounts
     int RequiresQuest;
 };
 
-std::vector<ClassSpells> classSpells;
-std::vector<TalentRanks> talentRanks;
-std::vector<Proficiencies> proficiencies;
-std::vector<Mounts> mounts;
+std::vector<ClassSpells> lsClassSpells;
+std::vector<TalentRanks> lsTalentRanks;
+std::vector<Proficiencies> lsProficiencies;
+std::vector<Mounts> lsMounts;
 
 enum SpellType
 {
@@ -51,16 +51,16 @@ enum SpellType
     MOUNT
 };
 
-bool enableGamemasters;
-bool enableClassSpells;
-bool enableTalentRanks;
-bool enableProficiencies;
-bool enableFromQuests;
-bool enableApprenticeRiding;
-bool enableJourneymanRiding;
-bool enableExpertRiding;
-bool enableArtisanRiding;
-bool enableColdWeatherFlying;
+bool lsEnableGamemasters;
+bool lsEnableClassSpells;
+bool lsEnableTalentRanks;
+bool lsEnableProficiencies;
+bool lsEnableFromQuests;
+bool lsEnableApprenticeRiding;
+bool lsEnableJourneymanRiding;
+bool lsEnableExpertRiding;
+bool lsEnableArtisanRiding;
+bool lsEnableColdWeatherFlying;
 
 class LearnSpells : public PlayerScript
 {
@@ -69,46 +69,46 @@ public:
 
     void OnPlayerLearnTalents(Player* player, uint32 /*talentId*/, uint32 /*talentRank*/, uint32 /*spellid*/) override
     {
-        if (enableTalentRanks)
-            if (player->GetSession()->GetSecurity() == SEC_PLAYER || enableGamemasters)
+        if (lsEnableTalentRanks)
+            if (player->GetSession()->GetSecurity() == SEC_PLAYER || lsEnableGamemasters)
                 LearnTalentRanksForNewLevel(player);
     }
 
     void OnLevelChanged(Player* player, uint8 /*oldLevel*/) override
     {
-        if (player->GetSession()->GetSecurity() == SEC_PLAYER || enableGamemasters)
+        if (player->GetSession()->GetSecurity() == SEC_PLAYER || lsEnableGamemasters)
             LearnAllSpells(player);
     }
 
     void OnLogin(Player* player) override
     {
-        if (player->GetSession()->GetSecurity() == SEC_PLAYER || enableGamemasters)
+        if (player->GetSession()->GetSecurity() == SEC_PLAYER || lsEnableGamemasters)
             LearnAllSpells(player);
     }
 private:
     void LearnAllSpells(Player* player)
     {
-        if (enableClassSpells)
+        if (lsEnableClassSpells)
             LearnSpellsForNewLevel(player);
 
-        if (enableTalentRanks)
+        if (lsEnableTalentRanks)
             LearnTalentRanksForNewLevel(player);
 
-        if (enableProficiencies)
+        if (lsEnableProficiencies)
             LearnProficienciesForNewLevel(player);
 
-        if (enableApprenticeRiding || enableJourneymanRiding || enableExpertRiding || enableArtisanRiding || enableColdWeatherFlying)
+        if (lsEnableApprenticeRiding || lsEnableJourneymanRiding || lsEnableExpertRiding || lsEnableArtisanRiding || lsEnableColdWeatherFlying)
             LearnMountsForNewLevel(player);
 
-        if (enableClassSpells && enableFromQuests && player->getClass() == CLASS_SHAMAN)
+        if (lsEnableClassSpells && lsEnableFromQuests && player->getClass() == CLASS_SHAMAN)
             AddShamanTotems(player);
     }
 
     void LearnSpellsForNewLevel(Player* player)
     {
-        for (auto& classSpell : classSpells)
+        for (auto& classSpell : lsClassSpells)
         {
-            if (classSpell.RequiresQuest == 1 && !enableFromQuests)
+            if (classSpell.RequiresQuest == 1 && !lsEnableFromQuests)
                 continue;
 
             if (classSpell.RaceId == -1 || classSpell.RaceId == player->getRace())
@@ -122,7 +122,7 @@ private:
 
     void LearnTalentRanksForNewLevel(Player* player)
     {
-        for (auto& talentRank : talentRanks)
+        for (auto& talentRank : lsTalentRanks)
         {
             if (talentRank.ClassId == player->getClass())
                 if (player->getLevel() >= talentRank.RequiredLevel)
@@ -134,7 +134,7 @@ private:
 
     void LearnProficienciesForNewLevel(Player* player)
     {
-        for (auto& proficiency : proficiencies)
+        for (auto& proficiency : lsProficiencies)
         {
             if (proficiency.ClassId == player->getClass())
                 if (player->getLevel() >= proficiency.RequiredLevel)
@@ -145,14 +145,14 @@ private:
 
     void LearnMountsForNewLevel(Player* player)
     {
-        for (auto& mount : mounts)
+        for (auto& mount : lsMounts)
         {
-            if ((mount.SpellId == 33388 && !enableApprenticeRiding) ||
-                (mount.SpellId == 33391 && !enableJourneymanRiding) ||
-                (mount.SpellId == 34090 && !enableExpertRiding) ||
-                (mount.SpellId == 34091 && !enableArtisanRiding) ||
-                (mount.SpellId == 54197 && !enableColdWeatherFlying) ||
-                (mount.RequiresQuest == 1 && !enableFromQuests))
+            if ((mount.SpellId == 33388 && !lsEnableApprenticeRiding) ||
+                (mount.SpellId == 33391 && !lsEnableJourneymanRiding) ||
+                (mount.SpellId == 34090 && !lsEnableExpertRiding) ||
+                (mount.SpellId == 34091 && !lsEnableArtisanRiding) ||
+                (mount.SpellId == 54197 && !lsEnableColdWeatherFlying) ||
+                (mount.RequiresQuest == 1 && !lsEnableFromQuests))
                 continue;
 
             if (mount.RaceId == -1 || mount.RaceId == player->getRace())
@@ -190,16 +190,16 @@ public:
 
     void OnAfterConfigLoad(bool reload) override
     {
-        enableGamemasters = sConfigMgr->GetOption<bool>("LearnSpells.Gamemasters", 0);
-        enableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells", 1);
-        enableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks", 1);
-        enableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies", 1);
-        enableFromQuests = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests", 1);
-        enableApprenticeRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Apprentice", 0);
-        enableJourneymanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Journeyman", 0);
-        enableExpertRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Expert", 0);
-        enableArtisanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Artisan", 0);
-        enableColdWeatherFlying = sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeatherFlying", 0);
+        lsEnableGamemasters = sConfigMgr->GetOption<bool>("LearnSpells.Gamemasters", 0);
+        lsEnableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells", 1);
+        lsEnableTalentRanks = sConfigMgr->GetOption<bool>("LearnSpells.TalentRanks", 1);
+        lsEnableProficiencies = sConfigMgr->GetOption<bool>("LearnSpells.Proficiencies", 1);
+        lsEnableFromQuests = sConfigMgr->GetOption<bool>("LearnSpells.SpellsFromQuests", 1);
+        lsEnableApprenticeRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Apprentice", 0);
+        lsEnableJourneymanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Journeyman", 0);
+        lsEnableExpertRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Expert", 0);
+        lsEnableArtisanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Artisan", 0);
+        lsEnableColdWeatherFlying = sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeatherFlying", 0);
 
         if (reload)
             LoadSpells();
@@ -232,20 +232,20 @@ private:
             return;
         }
 
-        classSpells.clear();
+        lsClassSpells.clear();
 
         int i = 0;
         do
         {
             Field* fields = result->Fetch();
 
-            classSpells.push_back(ClassSpells());
-            classSpells[i].RaceId = fields[0].Get<int32>();
-            classSpells[i].ClassId = fields[1].Get<int32>();
-            classSpells[i].SpellId = fields[2].Get<int32>();
-            classSpells[i].RequiredLevel = fields[3].Get<int32>();
-            classSpells[i].RequiredSpellId = fields[4].Get<int32>();
-            classSpells[i].RequiresQuest = fields[5].Get<int32>();
+            lsClassSpells.push_back(ClassSpells());
+            lsClassSpells[i].RaceId = fields[0].Get<int32>();
+            lsClassSpells[i].ClassId = fields[1].Get<int32>();
+            lsClassSpells[i].SpellId = fields[2].Get<int32>();
+            lsClassSpells[i].RequiredLevel = fields[3].Get<int32>();
+            lsClassSpells[i].RequiredSpellId = fields[4].Get<int32>();
+            lsClassSpells[i].RequiresQuest = fields[5].Get<int32>();
 
             i++;
         } while (result->NextRow());
@@ -263,18 +263,18 @@ private:
             return;
         }
 
-        talentRanks.clear();
+        lsTalentRanks.clear();
 
         int i = 0;
         do
         {
             Field* fields = result->Fetch();
 
-            talentRanks.push_back(TalentRanks());
-            talentRanks[i].ClassId = fields[0].Get<int32>();
-            talentRanks[i].SpellId = fields[1].Get<int32>();
-            talentRanks[i].RequiredLevel = fields[2].Get<int32>();
-            talentRanks[i].RequiredSpellId = fields[3].Get<int32>();
+            lsTalentRanks.push_back(TalentRanks());
+            lsTalentRanks[i].ClassId = fields[0].Get<int32>();
+            lsTalentRanks[i].SpellId = fields[1].Get<int32>();
+            lsTalentRanks[i].RequiredLevel = fields[2].Get<int32>();
+            lsTalentRanks[i].RequiredSpellId = fields[3].Get<int32>();
 
             i++;
         } while (result->NextRow());
@@ -292,17 +292,17 @@ private:
             return;
         }
 
-        proficiencies.clear();
+        lsProficiencies.clear();
 
         int i = 0;
         do
         {
             Field* fields = result->Fetch();
 
-            proficiencies.push_back(Proficiencies());
-            proficiencies[i].ClassId = fields[0].Get<int32>();
-            proficiencies[i].SpellId = fields[1].Get<int32>();
-            proficiencies[i].RequiredLevel = fields[2].Get<int32>();
+            lsProficiencies.push_back(Proficiencies());
+            lsProficiencies[i].ClassId = fields[0].Get<int32>();
+            lsProficiencies[i].SpellId = fields[1].Get<int32>();
+            lsProficiencies[i].RequiredLevel = fields[2].Get<int32>();
 
             i++;
         } while (result->NextRow());
@@ -320,21 +320,21 @@ private:
             return;
         }
 
-        mounts.clear();
+        lsMounts.clear();
 
         int i = 0;
         do
         {
             Field* fields = result->Fetch();
 
-            mounts.push_back(Mounts());
-            mounts[i].RaceId = fields[0].Get<int32>();
-            mounts[i].ClassId = fields[1].Get<int32>();
-            mounts[i].TeamId = fields[2].Get<int32>();
-            mounts[i].SpellId = fields[3].Get<int32>();
-            mounts[i].RequiredLevel = fields[4].Get<int32>();
-            mounts[i].RequiredSpellId = fields[5].Get<int32>();
-            mounts[i].RequiresQuest = fields[6].Get<int32>();
+            lsMounts.push_back(Mounts());
+            lsMounts[i].RaceId = fields[0].Get<int32>();
+            lsMounts[i].ClassId = fields[1].Get<int32>();
+            lsMounts[i].TeamId = fields[2].Get<int32>();
+            lsMounts[i].SpellId = fields[3].Get<int32>();
+            lsMounts[i].RequiredLevel = fields[4].Get<int32>();
+            lsMounts[i].RequiredSpellId = fields[5].Get<int32>();
+            lsMounts[i].RequiresQuest = fields[6].Get<int32>();
 
             i++;
         } while (result->NextRow());
