@@ -88,7 +88,7 @@ public:
 private:
     void LearnAllSpells(Player* player)
     {
-        if (lsEnableClassSpells)
+        if (lsEnableClassSpells || lsEnableFromQuests)
             LearnSpellsForNewLevel(player);
 
         if (lsEnableTalentRanks)
@@ -100,7 +100,7 @@ private:
         if (lsEnableApprenticeRiding || lsEnableJourneymanRiding || lsEnableExpertRiding || lsEnableArtisanRiding || lsEnableColdWeatherFlying)
             LearnMountsForNewLevel(player);
 
-        if (lsEnableClassSpells && lsEnableFromQuests && player->getClass() == CLASS_SHAMAN)
+        if (lsEnableFromQuests && player->getClass() == CLASS_SHAMAN)
             AddShamanTotems(player);
     }
 
@@ -108,6 +108,9 @@ private:
     {
         for (auto& classSpell : lsClassSpells)
         {
+            if (classSpell.RequiresQuest == 0 && !lsEnableClassSpells)
+                continue;
+
             if (classSpell.RequiresQuest == 1 && !lsEnableFromQuests)
                 continue;
 
