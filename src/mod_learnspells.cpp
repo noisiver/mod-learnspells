@@ -116,7 +116,7 @@ private:
 
             if (classSpell.RaceId == -1 || classSpell.RaceId == player->getRace())
                 if (classSpell.ClassId == player->getClass())
-                    if (player->getLevel() >= classSpell.RequiredLevel)
+                    if (player->GetLevel() >= classSpell.RequiredLevel)
                         if (classSpell.RequiredSpellId == -1 || player->HasSpell(classSpell.RequiredSpellId))
                             if (!player->HasSpell(classSpell.SpellId))
                                 player->learnSpell(classSpell.SpellId);
@@ -128,7 +128,7 @@ private:
         for (auto& talentRank : lsTalentRanks)
         {
             if (talentRank.ClassId == player->getClass())
-                if (player->getLevel() >= talentRank.RequiredLevel)
+                if (player->GetLevel() >= talentRank.RequiredLevel)
                     if (player->HasSpell(talentRank.RequiredSpellId))
                         if (!player->HasSpell(talentRank.SpellId))
                             player->learnSpell(talentRank.SpellId);
@@ -140,7 +140,7 @@ private:
         for (auto& proficiency : lsProficiencies)
         {
             if (proficiency.ClassId == player->getClass())
-                if (player->getLevel() >= proficiency.RequiredLevel)
+                if (player->GetLevel() >= proficiency.RequiredLevel)
                     if (!player->HasSpell(proficiency.SpellId))
                         player->learnSpell(proficiency.SpellId);
         }
@@ -162,7 +162,7 @@ private:
                 if (mount.ClassId == -1 || mount.ClassId == player->getClass())
                     if (mount.TeamId == -1 || mount.TeamId == player->GetTeamId())
                         if (mount.RequiredSpellId == -1 || player->HasSpell(mount.RequiredSpellId))
-                            if (player->getLevel() >= mount.RequiredLevel)
+                            if (player->GetLevel() >= mount.RequiredLevel)
                                 if (!player->HasSpell(mount.SpellId))
                                     player->learnSpell(mount.SpellId);
         }
@@ -179,7 +179,7 @@ private:
 
         for (int i = 0; i <= 3; i++)
         {
-            if (player->getLevel() >= totems[i][2])
+            if (player->GetLevel() >= totems[i][2])
                 if (!player->HasItemTotemCategory(totems[i][1]))
                     player->AddItem(totems[i][0], 1);
         }
