@@ -1778,7 +1778,7 @@ INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `requi
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 11, 27002, 70, 27001, 'Shred (Rank 7)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 11, 27012, 70, 17402, 'Hurricane (Rank 4)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 11, 33786, 70, -1, 'Cyclone');
-INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 11, 40120, 70, 34091, 'Swift Flight Form (Shapeshift)');
+INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 11, 40120, 71, 34091, 'Swift Flight Form (Shapeshift)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 11, 48442, 71, 26980, 'Regrowth (Rank 11)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 11, 48559, 71, 26998, 'Demoralizing Roar (Rank 7)');
 INSERT INTO `mod_learnspells` (`type`, `race_id`, `class_id`, `spell_id`, `required_level`, `required_spell_id`, `comment`) VALUES (0, -1, 11, 49799, 71, 27008, 'Rip (Rank 8)');
