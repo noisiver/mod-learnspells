@@ -87,10 +87,10 @@ void LearnSpells::LearnMounts(Player* player)
 
     for (auto& mount : ListMounts)
     {
-        if ((mount.SpellId == 33388 && !EnableApprenticeRiding) ||
-            (mount.SpellId == 33391 && !EnableJourneymanRiding) ||
-            (mount.SpellId == 34090 && !EnableExpertRiding) ||
-            (mount.SpellId == 34091 && !EnableArtisanRiding) ||
+        if (((mount.SpellId == 33388 || mount.RequiredSpellId == 33388) && !EnableApprenticeRiding) ||
+            ((mount.SpellId == 33391 || mount.RequiredSpellId == 33391) && !EnableJourneymanRiding) ||
+            ((mount.SpellId == 34090 || mount.RequiredSpellId == 34090) && !EnableExpertRiding) ||
+            ((mount.SpellId == 34091 || mount.RequiredSpellId == 34091) && !EnableArtisanRiding) ||
             (mount.SpellId == 54197 && !EnableColdWeatherFlying) ||
             (mount.RequiresQuest == 1 && !EnableFromQuests))
             continue;
