@@ -2,7 +2,7 @@
 
 #include "mod_learnspells.h"
 
-void LearnSpells::OnAfterConfigLoad(bool reload)
+void LearnSpells::OnAfterConfigLoad(bool /*reload*/)
 {
     EnableGamemasters = sConfigMgr->GetOption<bool>("LearnSpells.Gamemasters", 0);
     EnableClassSpells = sConfigMgr->GetOption<bool>("LearnSpells.ClassSpells", 1);
