@@ -3,48 +3,41 @@
 
 #include "ScriptMgr.h"
 
-struct ClassSpells
-{
-    int RaceId;
-    int ClassId;
-    int SpellId;
-    int RequiredLevel;
-    int RequiredSpellId;
-    int RequiresQuest;
-};
-
-struct TalentRanks
-{
-    int ClassId;
-    int SpellId;
-    int RequiredLevel;
-    int RequiredSpellId;
-};
-
-struct Proficiencies
-{
-    int ClassId;
-    int SpellId;
-    int RequiredLevel;
-};
-
-struct Mounts
-{
-    int RaceId;
-    int ClassId;
-    int TeamId;
-    int SpellId;
-    int RequiredLevel;
-    int RequiredSpellId;
-    int RequiresQuest;
-};
-
 enum SpellType
 {
-    CLASS = 0,
-    TALENT,
-    PROFICIENCY,
-    MOUNT
+    TYPE_CLASS                  = 0,
+    TYPE_TALENTS                = 1,
+    TYPE_PROFICIENCIES          = 2,
+    TYPE_MOUNTS                 = 3
+};
+
+enum SpellColumn
+{
+    SPELL_ID                    = 0,
+    SPELL_REQUIRED_TEAM         = 1,
+    SPELL_REQUIRED_RACE         = 2,
+    SPELL_REQUIRED_CLASS        = 3,
+    SPELL_REQUIRED_LEVEL        = 4,
+    SPELL_REQUIRED_SPELL_ID     = 5,
+    SPELL_REQUIRES_QUEST        = 6
+};
+
+enum Riding
+{
+    SPELL_APPRENTICE_RIDING     = 33388,
+    SPELL_JOURNEYMAN_RIDING     = 33391,
+    SPELL_EXPERT_RIDING         = 34090,
+    SPELL_ARTISAN_RIDING        = 34091,
+    SPELL_COLD_WEATHER_FLYING   = 54197
+};
+
+enum Progressive
+{
+    ECHOES_OF_DOOM              = 0,
+    SECRETS_OF_ULDUAR           = 1,
+    CALL_OF_THE_CRUSADE         = 2,
+    FALL_OF_THE_LICH_KING       = 3,
+    ASSAULT_ON_THE_RUBY_SANCTUM = 4
 };
 
 class LearnSpells : public PlayerScript, WorldScript
@@ -59,14 +52,8 @@ public:
 
     // WorldScript
     void OnAfterConfigLoad(bool /*reload*/) override;
-    void OnStartup() override;
 
 private:
-    std::vector<ClassSpells> ListClassSpells;
-    std::vector<TalentRanks> ListTalentRanks;
-    std::vector<Proficiencies> ListProficiencies;
-    std::vector<Mounts> ListMounts;
-
     bool EnableGamemasters;
     bool EnableClassSpells;
     bool EnableTalentRanks;
@@ -78,6 +65,8 @@ private:
     bool EnableArtisanRiding;
     bool EnableColdWeatherFlying;
 
+    int PatchId;
+
     void LearnAllSpells(Player* /*player*/);
     void LearnClassSpells(Player* /*player*/);
     void LearnTalentRanks(Player* /*player*/);
@@ -85,11 +74,7 @@ private:
     void LearnMounts(Player* /*player*/);
     void AddTotems(Player* /*player*/);
 
-    void LoadAllSpells();
-    void LoadClassSpells();
-    void LoadTalentRanks();
-    void LoadProficiencies();
-    void LoadMounts();
+    std::vector<std::vector<int>> GetSpells(int /*type*/);
 };
 
 #endif

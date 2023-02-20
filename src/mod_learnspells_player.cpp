@@ -34,20 +34,25 @@ void LearnSpells::LearnClassSpells(Player* player)
     if (!EnableClassSpells && !EnableFromQuests)
         return;
 
-    for (auto& classSpell : ListClassSpells)
+    std::vector<std::vector<int>> spells = GetSpells(TYPE_CLASS);
+
+    if (spells.empty())
+        return;
+
+    for (auto& spell : spells)
     {
-        if (classSpell.RequiresQuest == 0 && !EnableClassSpells)
+        if (spell[SPELL_REQUIRES_QUEST] == 0 && !EnableClassSpells)
             continue;
 
-        if (classSpell.RequiresQuest == 1 && !EnableFromQuests)
+        if (spell[SPELL_REQUIRES_QUEST] == 1 && !EnableFromQuests)
             continue;
 
-        if (classSpell.RaceId == -1 || classSpell.RaceId == player->getRace())
-            if (classSpell.ClassId == player->getClass())
-                if (player->GetLevel() >= classSpell.RequiredLevel)
-                    if (classSpell.RequiredSpellId == -1 || player->HasSpell(classSpell.RequiredSpellId))
-                        if (!player->HasSpell(classSpell.SpellId))
-                            player->learnSpell(classSpell.SpellId);
+        if (spell[SPELL_REQUIRED_RACE] == -1 || spell[SPELL_REQUIRED_RACE] == player->getRace())
+            if (spell[SPELL_REQUIRED_CLASS] == player->getClass())
+                if (player->GetLevel() >= spell[SPELL_REQUIRED_LEVEL])
+                    if (spell[SPELL_REQUIRED_SPELL_ID] == -1 || player->HasSpell(spell[SPELL_REQUIRED_SPELL_ID]))
+                        if (!player->HasSpell(spell[SPELL_ID]))
+                            player->learnSpell(spell[SPELL_ID]);
     }
 }
 
@@ -56,13 +61,18 @@ void LearnSpells::LearnTalentRanks(Player* player)
     if (!EnableTalentRanks)
         return;
 
-    for (auto& talentRank : ListTalentRanks)
+    std::vector<std::vector<int>> spells = GetSpells(TYPE_TALENTS);
+
+    if (spells.empty())
+        return;
+
+    for (auto& spell : spells)
     {
-        if (talentRank.ClassId == player->getClass())
-            if (player->GetLevel() >= talentRank.RequiredLevel)
-                if (player->HasSpell(talentRank.RequiredSpellId))
-                    if (!player->HasSpell(talentRank.SpellId))
-                        player->learnSpell(talentRank.SpellId);
+        if (spell[SPELL_REQUIRED_CLASS] == player->getClass())
+            if (player->GetLevel() >= spell[SPELL_REQUIRED_LEVEL])
+                if (player->HasSpell(spell[SPELL_REQUIRED_SPELL_ID]))
+                    if (!player->HasSpell(spell[SPELL_ID]))
+                        player->learnSpell(spell[SPELL_ID]);
     }
 }
 
@@ -71,12 +81,17 @@ void LearnSpells::LearnProficiencies(Player* player)
     if (!EnableProficiencies)
         return;
 
-    for (auto& proficiency : ListProficiencies)
+    std::vector<std::vector<int>> spells = GetSpells(TYPE_PROFICIENCIES);
+
+    if (spells.empty())
+        return;
+
+    for (auto& spell : spells)
     {
-        if (proficiency.ClassId == player->getClass())
-            if (player->GetLevel() >= proficiency.RequiredLevel)
-                if (!player->HasSpell(proficiency.SpellId))
-                    player->learnSpell(proficiency.SpellId);
+        if (spell[SPELL_REQUIRED_CLASS] == player->getClass())
+            if (player->GetLevel() >= spell[SPELL_REQUIRED_LEVEL])
+                if (!player->HasSpell(spell[SPELL_ID]))
+                    player->learnSpell(spell[SPELL_ID]);
     }
 }
 
@@ -85,23 +100,56 @@ void LearnSpells::LearnMounts(Player* player)
     if (!EnableApprenticeRiding && !EnableJourneymanRiding && !EnableExpertRiding && !EnableArtisanRiding && !EnableColdWeatherFlying)
         return;
 
-    for (auto& mount : ListMounts)
+    std::vector<std::vector<int>> spells = GetSpells(TYPE_MOUNTS);
+
+    if (spells.empty())
+        return;
+
+    for (auto& spell : spells)
     {
-        if (((mount.SpellId == 33388 || mount.RequiredSpellId == 33388) && !EnableApprenticeRiding) ||
-            ((mount.SpellId == 33391 || mount.RequiredSpellId == 33391) && !EnableJourneymanRiding) ||
-            ((mount.SpellId == 34090 || mount.RequiredSpellId == 34090) && !EnableExpertRiding) ||
-            ((mount.SpellId == 34091 || mount.RequiredSpellId == 34091) && !EnableArtisanRiding) ||
-            (mount.SpellId == 54197 && !EnableColdWeatherFlying) ||
-            (mount.RequiresQuest == 1 && !EnableFromQuests))
+        if (PatchId < CALL_OF_THE_CRUSADE)
+        {
+            if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 30;
+            }
+            else if (spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 60;
+            }
+            else if (spell[SPELL_ID] == SPELL_EXPERT_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 70;
+            }
+            else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 30;
+            }
+            else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 60;
+            }
+            else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING && (spell[SPELL_ID] != SPELL_ARTISAN_RIDING && spell[SPELL_ID] != SPELL_COLD_WEATHER_FLYING))
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 70;
+            }
+        }
+
+        if (((spell[SPELL_ID] == SPELL_APPRENTICE_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING) && !EnableApprenticeRiding) ||
+            ((spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING) && !EnableJourneymanRiding) ||
+            ((spell[SPELL_ID] == SPELL_EXPERT_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING) && !EnableExpertRiding) ||
+            ((spell[SPELL_ID] == SPELL_ARTISAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_ARTISAN_RIDING) && !EnableArtisanRiding) ||
+            (spell[SPELL_ID] == SPELL_COLD_WEATHER_FLYING && !EnableColdWeatherFlying) ||
+            (spell[SPELL_REQUIRES_QUEST] == 1 && !EnableFromQuests))
             continue;
 
-        if (mount.RaceId == -1 || mount.RaceId == player->getRace())
-            if (mount.ClassId == -1 || mount.ClassId == player->getClass())
-                if (mount.TeamId == -1 || mount.TeamId == player->GetTeamId())
-                    if (mount.RequiredSpellId == -1 || player->HasSpell(mount.RequiredSpellId))
-                        if (player->GetLevel() >= mount.RequiredLevel)
-                            if (!player->HasSpell(mount.SpellId))
-                                player->learnSpell(mount.SpellId);
+        if (spell[SPELL_REQUIRED_RACE] == -1 || spell[SPELL_REQUIRED_RACE] == player->getRace())
+            if (spell[SPELL_REQUIRED_CLASS] == -1 || spell[SPELL_REQUIRED_CLASS] == player->getClass())
+                if (spell[SPELL_REQUIRED_TEAM] == -1 || spell[SPELL_REQUIRED_TEAM] == player->GetTeamId())
+                    if (spell[SPELL_REQUIRED_SPELL_ID] == -1 || player->HasSpell(spell[SPELL_REQUIRED_SPELL_ID]))
+                        if (player->GetLevel() >= spell[SPELL_REQUIRED_LEVEL])
+                            if (!player->HasSpell(spell[SPELL_ID]))
+                                player->learnSpell(spell[SPELL_ID]);
     }
 }
 
@@ -110,10 +158,11 @@ void LearnSpells::AddTotems(Player* player)
     if (player->getClass() != CLASS_SHAMAN)
         return;
 
-    if (!EnableFromQuests)
+    if (!EnableClassSpells || !EnableFromQuests)
         return;
 
-    uint32 totems[4][3] = {
+    uint32 totems[4][3] =
+    {
         {5175, 2, 4}, // Earth Totem, TotemCategory 2, Level 4
         {5176, 4, 10}, // Fire Totem, TotemCategory 4, Level 10
         {5177, 5, 20}, // Water Totem, TotemCategory 5, Level 20
