@@ -31,15 +31,6 @@ enum Riding
     SPELL_COLD_WEATHER_FLYING   = 54197
 };
 
-enum Progressive
-{
-    ECHOES_OF_DOOM              = 0,
-    SECRETS_OF_ULDUAR           = 1,
-    CALL_OF_THE_CRUSADE         = 2,
-    FALL_OF_THE_LICH_KING       = 3,
-    ASSAULT_ON_THE_RUBY_SANCTUM = 4
-};
-
 class LearnSpells : public PlayerScript, WorldScript
 {
 public:
@@ -65,7 +56,8 @@ private:
     bool EnableArtisanRiding;
     bool EnableColdWeatherFlying;
 
-    int PatchId;
+    int ProgressionPatchId;
+    int ProgressivePatchId;
 
     void LearnAllSpells(Player* /*player*/);
     void LearnClassSpells(Player* /*player*/);

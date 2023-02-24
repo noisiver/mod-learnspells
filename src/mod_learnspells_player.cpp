@@ -41,6 +41,25 @@ void LearnSpells::LearnClassSpells(Player* player)
 
     for (auto& spell : spells)
     {
+        if ((spell[SPELL_ID] == 25782 || // Greater Blessing of Might (Rank 1)
+            spell[SPELL_ID] == 25894 || // Greater Blessing of Wisdom (Rank 1)
+            spell[SPELL_ID] == 25898 || // Greater Blessing of Kings
+            spell[SPELL_ID] == 25899 || // Greater Blessing of Sanctuary
+            spell[SPELL_ID] == 25916 || // Greater Blessing of Might (Rank 2)
+            spell[SPELL_ID] == 25918) && // Greater Blessing of Wisdom (Rank 2)
+            ProgressionPatchId < 8)
+            continue;
+
+        if ((spell[SPELL_ID] == 21849 || // Gift of the Wild (Rank 1)
+            spell[SPELL_ID] == 21850 || // Gift of the Wild (Rank 2)
+            spell[SPELL_ID] == 23028 || // Arcane Brilliance (Rank 1)
+            spell[SPELL_ID] == 21562 || // Prayer of Fortitude (Rank 1)
+            spell[SPELL_ID] == 27683 || // Prayer of Shadow Protection (Rank 1)
+            spell[SPELL_ID] == 21564 || // Prayer of Fortitude (Rank 2)
+            spell[SPELL_ID] == 27681) && // Prayer of Spirit(Rank 1)
+            ProgressionPatchId < 13)
+            continue;
+
         if (spell[SPELL_REQUIRES_QUEST] == 0 && !EnableClassSpells)
             continue;
 
@@ -107,7 +126,30 @@ void LearnSpells::LearnMounts(Player* player)
 
     for (auto& spell : spells)
     {
-        if (PatchId < CALL_OF_THE_CRUSADE)
+        if (ProgressionPatchId < 16)
+        {
+            if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 40;
+            }
+            else if (spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 60;
+            }
+            else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 40;
+            }
+            else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 60;
+            }
+            else if (spell[SPELL_ID] == SPELL_EXPERT_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING)
+            {
+                continue;
+            }
+        }
+        else if (ProgressionPatchId < 19 || ProgressivePatchId < 2)
         {
             if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
             {

@@ -15,5 +15,6 @@ void LearnSpells::OnAfterConfigLoad(bool /*reload*/)
     EnableArtisanRiding = sConfigMgr->GetOption<bool>("LearnSpells.Riding.Artisan", 0);
     EnableColdWeatherFlying = sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeatherFlying", 0);
 
-    PatchId = sConfigMgr->GetOption<int>("Progressive.Patch", ASSAULT_ON_THE_RUBY_SANCTUM, false);
+    ProgressionPatchId = sConfigMgr->GetOption<int>("Progression.Patch", 21, false);
+    ProgressivePatchId = sConfigMgr->GetOption<int>("Progressive.Patch", 4, false);
 }
