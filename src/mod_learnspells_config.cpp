@@ -16,5 +16,4 @@ void LearnSpells::OnAfterConfigLoad(bool /*reload*/)
     EnableColdWeatherFlying = sConfigMgr->GetOption<bool>("LearnSpells.Riding.ColdWeatherFlying", 0);
 
     ProgressionPatchId = sConfigMgr->GetOption<int>("Progression.Patch", 21, false);
-    ProgressivePatchId = sConfigMgr->GetOption<int>("Progressive.Patch", 4, false);
 }

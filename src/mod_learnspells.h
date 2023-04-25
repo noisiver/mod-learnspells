@@ -57,7 +57,6 @@ private:
     bool EnableColdWeatherFlying;
 
     int ProgressionPatchId;
-    int ProgressivePatchId;
 
     void LearnAllSpells(Player* /*player*/);
     void LearnClassSpells(Player* /*player*/);

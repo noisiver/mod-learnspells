@@ -149,7 +149,7 @@ void LearnSpells::LearnMounts(Player* player)
                 continue;
             }
         }
-        else if (ProgressionPatchId < 19 || ProgressivePatchId < 2)
+        else if (ProgressionPatchId < 19)
         {
             if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
             {
