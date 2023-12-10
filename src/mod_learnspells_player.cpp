@@ -22,6 +22,9 @@ void LearnSpells::LearnAllSpells(Player* player)
     if (player->IsGameMaster() && !EnableGamemasters)
         return;
 
+    if (player->getClass() == CLASS_DEATH_KNIGHT && player->GetMapId() == 609)
+        return;
+
     LearnClassSpells(player);
     LearnTalentRanks(player);
     LearnProficiencies(player);
