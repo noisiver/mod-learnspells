@@ -47,6 +47,13 @@ void LearnSpells::LearnClassSpells(Player* player)
 
     for (auto& spell : spells)
     {
+
+        if ((spell[SPELL_ID] == 66842 || // Call of the Elements
+            spell[SPELL_ID] == 66843 || // Call of the Ancestors
+            spell[SPELL_ID] == 66844) && // Call of the Spirits
+            ProgressionPatchId < 2)
+            continue;
+
         if (spell[SPELL_REQUIRES_QUEST] == 0 && !EnableClassSpells)
             continue;
 
@@ -113,6 +120,34 @@ void LearnSpells::LearnMounts(Player* player)
 
     for (auto& spell : spells)
     {
+        if (ProgressionPatchId < 2)
+        {
+            if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 30;
+            }
+            else if (spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 60;
+            }
+            else if (spell[SPELL_ID] == SPELL_EXPERT_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 70;
+            }
+            else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 30;
+            }
+            else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING)
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 60;
+            }
+            else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING && (spell[SPELL_ID] != SPELL_ARTISAN_RIDING && spell[SPELL_ID] != SPELL_COLD_WEATHER_FLYING))
+            {
+                spell[SPELL_REQUIRED_LEVEL] = 70;
+            }
+        }
+
         if (((spell[SPELL_ID] == SPELL_APPRENTICE_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING) && !EnableApprenticeRiding) ||
             ((spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING) && !EnableJourneymanRiding) ||
             ((spell[SPELL_ID] == SPELL_EXPERT_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING) && !EnableExpertRiding) ||

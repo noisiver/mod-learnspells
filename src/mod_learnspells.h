@@ -56,6 +56,8 @@ private:
     bool EnableArtisanRiding;
     bool EnableColdWeatherFlying;
 
+    uint32 ProgressionPatchId;
+
     void LearnAllSpells(Player* /*player*/);
     void LearnClassSpells(Player* /*player*/);
     void LearnTalentRanks(Player* /*player*/);
