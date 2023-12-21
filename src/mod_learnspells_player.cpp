@@ -19,6 +19,9 @@ void LearnSpells::OnPlayerLearnTalents(Player* player, uint32 /*talentId*/, uint
 
 void LearnSpells::LearnAllSpells(Player* player)
 {
+    if (!player)
+        return;
+
     if (player->IsGameMaster() && !EnableGamemasters)
         return;
 
