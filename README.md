@@ -1,6 +1,3 @@
-# Buy Me A Coffee
-Want to show me some appreciation? Why not [buy me a coffee](https://www.buymeacoffee.com/noisiver)?
-
 # Features
 The module will give players new spells when leveling up or when entering the world.
 
