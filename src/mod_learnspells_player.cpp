@@ -48,7 +48,7 @@ void LearnSpells::LearnClassSpells(Player* player)
         if ((spell[SPELL_ID] == 66842 || // Call of the Elements
             spell[SPELL_ID] == 66843 || // Call of the Ancestors
             spell[SPELL_ID] == 66844) && // Call of the Spirits
-            ProgressionPatchId < 2)
+            ProgressionPatchId < 19)
             continue;
 
         if (spell[SPELL_REQUIRES_QUEST] == 0 && !EnableClassSpells)
@@ -117,11 +117,11 @@ void LearnSpells::LearnMounts(Player* player)
 
     for (auto& spell : spells)
     {
-        if (ProgressionPatchId < 2)
+        if (ProgressionPatchId < 19)
         {
             if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
             {
-                spell[SPELL_REQUIRED_LEVEL] = 30;
+                spell[SPELL_REQUIRED_LEVEL] = ProgressionPatchId < 16 ? 40 : 30;
             }
             else if (spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING)
             {
@@ -133,7 +133,7 @@ void LearnSpells::LearnMounts(Player* player)
             }
             else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING)
             {
-                spell[SPELL_REQUIRED_LEVEL] = 30;
+                spell[SPELL_REQUIRED_LEVEL] = ProgressionPatchId < 16 ? 40 : 30;
             }
             else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING)
             {
