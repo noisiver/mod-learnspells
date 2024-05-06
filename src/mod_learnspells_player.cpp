@@ -146,6 +146,14 @@ void LearnSpells::LearnMounts(Player* player)
             }
         }
 
+        if (sProgression->GetPatchId() < PATCH_ECHOES_OF_DOOM)
+        {
+            if ((spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING) || (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING) || (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING && spell[SPELL_ID] != SPELL_ARTISAN_RIDING))
+            {
+                continue;
+            }
+        }
+
         if (((spell[SPELL_ID] == SPELL_APPRENTICE_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING) && !EnableApprenticeRiding) ||
             ((spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING) && !EnableJourneymanRiding) ||
             ((spell[SPELL_ID] == SPELL_EXPERT_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING) && !EnableExpertRiding) ||
