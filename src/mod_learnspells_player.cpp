@@ -20,10 +20,14 @@ void LearnSpells::OnPlayerLearnTalents(Player* player, uint32 /*talentId*/, uint
 void LearnSpells::LearnAllSpells(Player* player)
 {
     if (player->IsGameMaster() && !EnableGamemasters)
+    {
         return;
+    }
 
     if (player->getClass() == CLASS_DEATH_KNIGHT && player->GetMapId() == 609)
+    {
         return;
+    }
 
     LearnClassSpells(player);
     LearnTalentRanks(player);
@@ -35,12 +39,16 @@ void LearnSpells::LearnAllSpells(Player* player)
 void LearnSpells::LearnClassSpells(Player* player)
 {
     if (!EnableClassSpells && !EnableFromQuests)
+    {
         return;
+    }
 
     std::vector<std::vector<int>> spells = GetSpells(TYPE_CLASS);
 
     if (spells.empty())
+    {
         return;
+    }
 
     for (auto& spell : spells)
     {
@@ -52,68 +60,108 @@ void LearnSpells::LearnClassSpells(Player* player)
             continue;
 
         if (spell[SPELL_REQUIRES_QUEST] == 0 && !EnableClassSpells)
+        {
             continue;
+        }
 
         if (spell[SPELL_REQUIRES_QUEST] == 1 && !EnableFromQuests)
+        {
             continue;
+        }
 
         if (spell[SPELL_REQUIRED_RACE] == -1 || spell[SPELL_REQUIRED_RACE] == player->getRace())
+        {
             if (spell[SPELL_REQUIRED_CLASS] == player->getClass())
+            {
                 if (player->GetLevel() >= spell[SPELL_REQUIRED_LEVEL])
+                {
                     if (spell[SPELL_REQUIRED_SPELL_ID] == -1 || player->HasSpell(spell[SPELL_REQUIRED_SPELL_ID]))
+                    {
                         if (!player->HasSpell(spell[SPELL_ID]))
+                        {
                             player->learnSpell(spell[SPELL_ID]);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 void LearnSpells::LearnTalentRanks(Player* player)
 {
     if (!EnableTalentRanks)
+    {
         return;
+    }
 
     std::vector<std::vector<int>> spells = GetSpells(TYPE_TALENTS);
 
     if (spells.empty())
+    {
         return;
+    }
 
     for (auto& spell : spells)
     {
         if (spell[SPELL_REQUIRED_CLASS] == player->getClass())
+        {
             if (player->GetLevel() >= spell[SPELL_REQUIRED_LEVEL])
+            {
                 if (player->HasSpell(spell[SPELL_REQUIRED_SPELL_ID]))
+                {
                     if (!player->HasSpell(spell[SPELL_ID]))
+                    {
                         player->learnSpell(spell[SPELL_ID]);
+                    }
+                }
+            }
+        }
     }
 }
 
 void LearnSpells::LearnProficiencies(Player* player)
 {
     if (!EnableProficiencies)
+    {
         return;
+    }
 
     std::vector<std::vector<int>> spells = GetSpells(TYPE_PROFICIENCIES);
 
     if (spells.empty())
+    {
         return;
+    }
 
     for (auto& spell : spells)
     {
         if (spell[SPELL_REQUIRED_CLASS] == player->getClass())
+        {
             if (player->GetLevel() >= spell[SPELL_REQUIRED_LEVEL])
+            {
                 if (!player->HasSpell(spell[SPELL_ID]))
+                {
                     player->learnSpell(spell[SPELL_ID]);
+                }
+            }
+        }
     }
 }
 
 void LearnSpells::LearnMounts(Player* player)
 {
     if (!EnableApprenticeRiding && !EnableJourneymanRiding && !EnableExpertRiding && !EnableArtisanRiding && !EnableColdWeatherFlying)
+    {
         return;
+    }
 
     std::vector<std::vector<int>> spells = GetSpells(TYPE_MOUNTS);
 
     if (spells.empty())
+    {
         return;
+    }
 
     for (auto& spell : spells)
     {
@@ -159,25 +207,43 @@ void LearnSpells::LearnMounts(Player* player)
             ((spell[SPELL_ID] == SPELL_ARTISAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_ARTISAN_RIDING) && !EnableArtisanRiding) ||
             (spell[SPELL_ID] == SPELL_COLD_WEATHER_FLYING && !EnableColdWeatherFlying) ||
             (spell[SPELL_REQUIRES_QUEST] == 1 && !EnableFromQuests))
+        {
             continue;
+        }
 
         if (spell[SPELL_REQUIRED_RACE] == -1 || spell[SPELL_REQUIRED_RACE] == player->getRace())
+        {
             if (spell[SPELL_REQUIRED_CLASS] == -1 || spell[SPELL_REQUIRED_CLASS] == player->getClass())
+            {
                 if (spell[SPELL_REQUIRED_TEAM] == -1 || spell[SPELL_REQUIRED_TEAM] == player->GetTeamId())
+                {
                     if (spell[SPELL_REQUIRED_SPELL_ID] == -1 || player->HasSpell(spell[SPELL_REQUIRED_SPELL_ID]))
+                    {
                         if (player->GetLevel() >= spell[SPELL_REQUIRED_LEVEL])
+                        {
                             if (!player->HasSpell(spell[SPELL_ID]))
+                            {
                                 player->learnSpell(spell[SPELL_ID]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 void LearnSpells::AddTotems(Player* player)
 {
     if (player->getClass() != CLASS_SHAMAN)
+    {
         return;
+    }
 
     if (!EnableClassSpells || !EnableFromQuests)
+    {
         return;
+    }
 
     uint32 totems[4][3] =
     {
@@ -190,7 +256,11 @@ void LearnSpells::AddTotems(Player* player)
     for (int i = 0; i <= 3; i++)
     {
         if (player->GetLevel() >= totems[i][2])
+        {
             if (!player->HasItemTotemCategory(totems[i][1]))
+            {
                 player->AddItem(totems[i][0], 1);
+            }
+        }
     }
 }
