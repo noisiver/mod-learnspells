@@ -57,7 +57,9 @@ void LearnSpells::LearnClassSpells(Player* player)
             spell[SPELL_ID] == 66843 || // Call of the Ancestors
             spell[SPELL_ID] == 66844) && // Call of the Spirits
             ProgressionPatchId < 19)
+        {
             continue;
+        }
 
         if (spell[SPELL_REQUIRES_QUEST] == 0 && !EnableClassSpells)
         {
