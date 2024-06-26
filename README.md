@@ -1,5 +1,3 @@
-[![core-build](https://github.com/noisiver/mod-learnspells/actions/workflows/core-build.yml/badge.svg)](https://github.com/noisiver/mod-learnspells/actions/workflows/core-build.yml)
-
 # Features
 The module will give players new spells when leveling up or when entering the world.
 
