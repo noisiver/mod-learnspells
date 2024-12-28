@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Progression.h"
 
 #include "mod_learnspells.h"
 
@@ -52,21 +53,42 @@ void LearnSpells::LearnClassSpells(Player* player)
 
     for (auto& spell : spells)
     {
-
-        if ((spell[SPELL_ID] == 66842 || // Call of the Elements
-            spell[SPELL_ID] == 66843 || // Call of the Ancestors
-            spell[SPELL_ID] == 66844) && // Call of the Spirits
-            ProgressionPatchId < 19)
-        {
-            continue;
-        }
-
         if (spell[SPELL_REQUIRES_QUEST] == 0 && !EnableClassSpells)
         {
             continue;
         }
 
         if (spell[SPELL_REQUIRES_QUEST] == 1 && !EnableFromQuests)
+        {
+            continue;
+        }
+
+        if (sProgression->GetPatchId() < 19 && (spell[SPELL_ID] == 33950 || spell[SPELL_ID] == 66842 || spell[SPELL_ID] == 66843 || spell[SPELL_ID] == 66844))
+        {
+            continue;
+        }
+
+        if (sProgression->GetPatchId() < 17 && (spell[SPELL_ID] == 25392 || spell[SPELL_ID] == 26991 || spell[SPELL_ID] == 33717 || spell[SPELL_ID] == 39374))
+        {
+            continue;
+        }
+
+        if (sProgression->GetPatchId() < 12 && (spell[SPELL_ID] == 21562 || spell[SPELL_ID] == 21564 || spell[SPELL_ID] == 21849 || spell[SPELL_ID] == 21850 ||
+        spell[SPELL_ID] == 23028 || spell[SPELL_ID] == 25286 || spell[SPELL_ID] == 25288 || spell[SPELL_ID] == 25289 ||
+        spell[SPELL_ID] == 25290 || spell[SPELL_ID] == 25291 || spell[SPELL_ID] == 25292 || spell[SPELL_ID] == 25294 ||
+        spell[SPELL_ID] == 25295 || spell[SPELL_ID] == 25296 || spell[SPELL_ID] == 25297 || spell[SPELL_ID] == 25298 ||
+        spell[SPELL_ID] == 25299 || spell[SPELL_ID] == 25300 || spell[SPELL_ID] == 25302 || spell[SPELL_ID] == 25304 ||
+        spell[SPELL_ID] == 25306 || spell[SPELL_ID] == 25307 || spell[SPELL_ID] == 25309 || spell[SPELL_ID] == 25311 ||
+        spell[SPELL_ID] == 25314 || spell[SPELL_ID] == 25315 || spell[SPELL_ID] == 25316 || spell[SPELL_ID] == 25345 ||
+        spell[SPELL_ID] == 25357 || spell[SPELL_ID] == 25361 || spell[SPELL_ID] == 27090 || spell[SPELL_ID] == 27127 ||
+        spell[SPELL_ID] == 27683 || spell[SPELL_ID] == 28609 || spell[SPELL_ID] == 28610 || spell[SPELL_ID] == 28612 ||
+        spell[SPELL_ID] == 29228 || spell[SPELL_ID] == 31016 || spell[SPELL_ID] == 31018 || spell[SPELL_ID] == 31709 ||
+        spell[SPELL_ID] == 36936))
+        {
+            continue;
+        }
+
+        if (sProgression->GetPatchId() < 8 && (spell[SPELL_ID] == 25782 || spell[SPELL_ID] == 25894 || spell[SPELL_ID] == 25898 || spell[SPELL_ID] == 25899 || spell[SPELL_ID] == 25916 || spell[SPELL_ID] == 25918))
         {
             continue;
         }
@@ -167,7 +189,27 @@ void LearnSpells::LearnMounts(Player* player)
 
     for (auto& spell : spells)
     {
-        if (ProgressionPatchId < 19)
+        if (((spell[SPELL_ID] == SPELL_APPRENTICE_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING) && !EnableApprenticeRiding) ||
+            ((spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING) && !EnableJourneymanRiding) ||
+            ((spell[SPELL_ID] == SPELL_EXPERT_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING) && !EnableExpertRiding) ||
+            ((spell[SPELL_ID] == SPELL_ARTISAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_ARTISAN_RIDING) && !EnableArtisanRiding) ||
+            (spell[SPELL_ID] == SPELL_COLD_WEATHER_FLYING && !EnableColdWeatherFlying) ||
+            (spell[SPELL_REQUIRES_QUEST] == 1 && !EnableFromQuests))
+        {
+            continue;
+        }
+
+        if (sProgression->GetPatchId() < 17)
+        {
+            if ((spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING)
+            || (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING)
+            || (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING && spell[SPELL_ID] != SPELL_ARTISAN_RIDING))
+            {
+                continue;
+            }
+        }
+
+        if (sProgression->GetPatchId() < 19)
         {
             if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
             {
@@ -193,24 +235,6 @@ void LearnSpells::LearnMounts(Player* player)
             {
                 spell[SPELL_REQUIRED_LEVEL] = 70;
             }
-        }
-
-        if (ProgressionPatchId < 17)
-        {
-            if ((spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING) || (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING) || (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING && spell[SPELL_ID] != SPELL_ARTISAN_RIDING))
-            {
-                continue;
-            }
-        }
-
-        if (((spell[SPELL_ID] == SPELL_APPRENTICE_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING) && !EnableApprenticeRiding) ||
-            ((spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING) && !EnableJourneymanRiding) ||
-            ((spell[SPELL_ID] == SPELL_EXPERT_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_EXPERT_RIDING) && !EnableExpertRiding) ||
-            ((spell[SPELL_ID] == SPELL_ARTISAN_RIDING || spell[SPELL_REQUIRED_SPELL_ID] == SPELL_ARTISAN_RIDING) && !EnableArtisanRiding) ||
-            (spell[SPELL_ID] == SPELL_COLD_WEATHER_FLYING && !EnableColdWeatherFlying) ||
-            (spell[SPELL_REQUIRES_QUEST] == 1 && !EnableFromQuests))
-        {
-            continue;
         }
 
         if (spell[SPELL_REQUIRED_RACE] == -1 || spell[SPELL_REQUIRED_RACE] == player->getRace())
