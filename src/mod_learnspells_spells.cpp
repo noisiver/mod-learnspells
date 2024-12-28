@@ -148,7 +148,7 @@ std::vector<std::vector<int>> LearnSpells::GetSpells(int type)
             { 633, -1, -1, 2, 10, -1, 0 }, // Lay on Hands (Rank 1)
             { 1022, -1, -1, 2, 10, -1, 0 }, // Hand of Protection (Rank 1)
             { 10290, -1, -1, 2, 10, 465, 0 }, // Devotion Aura (Rank 2)
-            { 7328, -1, -1, 2, 12, -1, 0 }, // Redemption (Rank 1)
+            { 7328, -1, -1, 2, 12, -1, 1 }, // Redemption (Rank 1)
             { 19834, -1, -1, 2, 12, 19740, 0 }, // Blessing of Might (Rank 2)
             { 53408, -1, -1, 2, 12, -1, 0 }, // Judgement of Wisdom
             { 647, -1, -1, 2, 14, 639, 0 }, // Holy Light (Rank 3)
