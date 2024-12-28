@@ -213,7 +213,7 @@ void LearnSpells::LearnMounts(Player* player)
         {
             if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
             {
-                spell[SPELL_REQUIRED_LEVEL] = ProgressionPatchId < 16 ? 40 : 30;
+                spell[SPELL_REQUIRED_LEVEL] = sProgression->GetPatchId() < 16 ? 40 : 30;
             }
             else if (spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING)
             {
@@ -225,7 +225,7 @@ void LearnSpells::LearnMounts(Player* player)
             }
             else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING)
             {
-                spell[SPELL_REQUIRED_LEVEL] = ProgressionPatchId < 16 ? 40 : 30;
+                spell[SPELL_REQUIRED_LEVEL] = sProgression->GetPatchId() < 16 ? 40 : 30;
             }
             else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING)
             {
