@@ -37,8 +37,8 @@ public:
     LearnSpells();
 
     // PlayerScript
-    void OnLevelChanged(Player* /*player*/, uint8 /*oldLevel*/) override;
-    void OnLogin(Player* /*player*/) override;
+    void OnPlayerLevelChanged(Player* /*player*/, uint8 /*oldLevel*/) override;
+    void OnPlayerLogin(Player* /*player*/) override;
     void OnPlayerLearnTalents(Player* /*player*/, uint32 /*talentId*/, uint32 /*talentRank*/, uint32 /*spellid*/) override;
 
     // WorldScript
