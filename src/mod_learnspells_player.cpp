@@ -3,12 +3,12 @@
 
 #include "mod_learnspells.h"
 
-void LearnSpells::OnLevelChanged(Player* player, uint8 /*oldLevel*/)
+void LearnSpells::OnPlayerLevelChanged(Player* player, uint8 /*oldLevel*/)
 {
     LearnAllSpells(player);
 }
 
-void LearnSpells::OnLogin(Player* player)
+void LearnSpells::OnPlayerLogin(Player* player)
 {
     LearnAllSpells(player);
 }
