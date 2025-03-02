@@ -1,7 +1,8 @@
 #include "Player.h"
-#include "Progression.h"
 
 #include "mod_learnspells.h"
+
+#include "mod_progression.h"
 
 void LearnSpells::OnPlayerLevelChanged(Player* player, uint8 /*oldLevel*/)
 {
@@ -63,19 +64,19 @@ void LearnSpells::LearnClassSpells(Player* player)
             continue;
         }
 
-        if (sProgression->GetPatchId() < 19 && (spell[SPELL_ID] == 33950 || spell[SPELL_ID] == 66842 || spell[SPELL_ID] == 66843 || spell[SPELL_ID] == 66844))
+        if (sProgressionMgr->GetPatchId() < 19 && (spell[SPELL_ID] == 33950 || spell[SPELL_ID] == 66842 || spell[SPELL_ID] == 66843 || spell[SPELL_ID] == 66844))
         {
             continue;
         }
 
-        if (sProgression->GetPatchId() < 17 && (spell[SPELL_ID] == 1066 || spell[SPELL_ID] == 8946 || spell[SPELL_ID] == 23922 ||
+        if (sProgressionMgr->GetPatchId() < 17 && (spell[SPELL_ID] == 1066 || spell[SPELL_ID] == 8946 || spell[SPELL_ID] == 23922 ||
                                                 spell[SPELL_ID] == 25392 || spell[SPELL_ID] == 26991 || spell[SPELL_ID] == 33717 ||
                                                 spell[SPELL_ID] == 39374 || spell[SPELL_ID] == 62124))
         {
             continue;
         }
 
-        if (sProgression->GetPatchId() < 12 && (spell[SPELL_ID] == 21562 || spell[SPELL_ID] == 21564 || spell[SPELL_ID] == 21849 || spell[SPELL_ID] == 21850 ||
+        if (sProgressionMgr->GetPatchId() < 12 && (spell[SPELL_ID] == 21562 || spell[SPELL_ID] == 21564 || spell[SPELL_ID] == 21849 || spell[SPELL_ID] == 21850 ||
                                                 spell[SPELL_ID] == 23028 || spell[SPELL_ID] == 25286 || spell[SPELL_ID] == 25288 || spell[SPELL_ID] == 25289 ||
                                                 spell[SPELL_ID] == 25290 || spell[SPELL_ID] == 25291 || spell[SPELL_ID] == 25292 || spell[SPELL_ID] == 25294 ||
                                                 spell[SPELL_ID] == 25295 || spell[SPELL_ID] == 25296 || spell[SPELL_ID] == 25297 || spell[SPELL_ID] == 25298 ||
@@ -90,7 +91,7 @@ void LearnSpells::LearnClassSpells(Player* player)
             continue;
         }
 
-        if (sProgression->GetPatchId() < 8 && (spell[SPELL_ID] == 25782 || spell[SPELL_ID] == 25894 || spell[SPELL_ID] == 25898 || spell[SPELL_ID] == 25899 ||
+        if (sProgressionMgr->GetPatchId() < 8 && (spell[SPELL_ID] == 25782 || spell[SPELL_ID] == 25894 || spell[SPELL_ID] == 25898 || spell[SPELL_ID] == 25899 ||
                                                spell[SPELL_ID] == 25916 || spell[SPELL_ID] == 25918))
         {
             continue;
@@ -202,7 +203,7 @@ void LearnSpells::LearnMounts(Player* player)
             continue;
         }
 
-        if (sProgression->GetPatchId() < 17)
+        if (sProgressionMgr->GetPatchId() < 17)
         {
             if ((spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING)
             || (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING)
@@ -212,11 +213,11 @@ void LearnSpells::LearnMounts(Player* player)
             }
         }
 
-        if (sProgression->GetPatchId() < 19)
+        if (sProgressionMgr->GetPatchId() < 19)
         {
             if (spell[SPELL_ID] == SPELL_APPRENTICE_RIDING)
             {
-                spell[SPELL_REQUIRED_LEVEL] = sProgression->GetPatchId() < 16 ? 40 : 30;
+                spell[SPELL_REQUIRED_LEVEL] = sProgressionMgr->GetPatchId() < 16 ? 40 : 30;
             }
             else if (spell[SPELL_ID] == SPELL_JOURNEYMAN_RIDING)
             {
@@ -228,7 +229,7 @@ void LearnSpells::LearnMounts(Player* player)
             }
             else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_APPRENTICE_RIDING && spell[SPELL_ID] != SPELL_JOURNEYMAN_RIDING)
             {
-                spell[SPELL_REQUIRED_LEVEL] = sProgression->GetPatchId() < 16 ? 40 : 30;
+                spell[SPELL_REQUIRED_LEVEL] = sProgressionMgr->GetPatchId() < 16 ? 40 : 30;
             }
             else if (spell[SPELL_REQUIRED_SPELL_ID] == SPELL_JOURNEYMAN_RIDING && spell[SPELL_ID] != SPELL_EXPERT_RIDING)
             {
