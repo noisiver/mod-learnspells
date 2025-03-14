@@ -71,7 +71,7 @@ void LearnSpells::LearnClassSpells(Player* player)
 
         if (sProgressionMgr->GetPatchId() < 17 && (spell[SPELL_ID] == 1066 || spell[SPELL_ID] == 8946 || spell[SPELL_ID] == 23922 ||
                                                 spell[SPELL_ID] == 25392 || spell[SPELL_ID] == 26991 || spell[SPELL_ID] == 33717 ||
-                                                spell[SPELL_ID] == 39374 || spell[SPELL_ID] == 62124))
+                                                spell[SPELL_ID] == 39374 || spell[SPELL_ID] == 53736 || spell[SPELL_ID] == 62124))
         {
             continue;
         }
