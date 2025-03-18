@@ -64,7 +64,7 @@ void LearnSpells::LearnClassSpells(Player* player)
             continue;
         }
 
-        if (sProgressionMgr->GetPatchId() < 19 && (spell[SPELL_ID] == 33950 || spell[SPELL_ID] == 66842 || spell[SPELL_ID] == 66843 || spell[SPELL_ID] == 66844))
+        if (sProgressionMgr->GetPatchId() < 19 && (spell[SPELL_ID] == 66842 || spell[SPELL_ID] == 66843 || spell[SPELL_ID] == 66844))
         {
             continue;
         }
@@ -95,6 +95,11 @@ void LearnSpells::LearnClassSpells(Player* player)
                                                spell[SPELL_ID] == 25916 || spell[SPELL_ID] == 25918))
         {
             continue;
+        }
+
+        if (sProgressionMgr->GetPatchId() < 19 && spell[SPELL_ID] == 33943)
+        {
+            spell[SPELL_REQUIRED_LEVEL] = 68;
         }
 
         if (spell[SPELL_REQUIRED_RACE] == -1 || spell[SPELL_REQUIRED_RACE] == player->getRace())
